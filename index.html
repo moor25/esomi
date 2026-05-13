@@ -122,6 +122,7 @@
       width: 100%; height: 100%;
       animation: diamond-float 5s ease-in-out infinite;
       will-change: transform;
+      filter: brightness(.65) drop-shadow(0 0 28px rgba(201,168,76,.38)) drop-shadow(0 0 10px rgba(180,220,255,.28));
     }
     @keyframes diamond-float {
       0%, 100% { transform: translateY(0) rotate(0deg); }
@@ -301,7 +302,33 @@
     ══════════════════════════════════════ */
     .rings-section { background: var(--deep); }
     .rings-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 64px; flex-wrap: wrap; gap: 24px; }
-    .rings-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2px; }
+    .rings-carousel { position: relative; overflow: hidden; }
+    .rings-track {
+      display: flex;
+      transition: transform .55s cubic-bezier(.25,.1,.25,1);
+      will-change: transform;
+    }
+    .rings-track .ring-card { flex: 0 0 100%; min-width: 0; }
+    .carousel-nav {
+      display: flex; align-items: center; justify-content: center;
+      gap: 28px; padding: 36px 0 0;
+    }
+    .carousel-btn {
+      width: 46px; height: 46px; border-radius: 50%;
+      background: none; border: 1px solid rgba(201,168,76,.3);
+      color: var(--gold); cursor: pointer; font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color .2s, opacity .2s;
+    }
+    .carousel-btn:hover { border-color: var(--gold); }
+    .carousel-btn:disabled { opacity: .25; cursor: default; pointer-events: none; }
+    .carousel-dots { display: flex; gap: 9px; align-items: center; }
+    .carousel-dot {
+      width: 6px; height: 6px; border-radius: 50%; padding: 0; border: none;
+      background: rgba(201,168,76,.28); cursor: pointer;
+      transition: background .25s, transform .25s;
+    }
+    .carousel-dot.active { background: var(--gold); transform: scale(1.4); }
     .ring-card {
       background: var(--card);
       overflow: hidden; cursor: pointer;
@@ -709,7 +736,7 @@
       /* Rings */
       .rings-header { margin-bottom: 36px; flex-direction: column; gap: 12px; }
       .rings-header p { max-width: 100% !important; }
-      .rings-grid { grid-template-columns: 1fr; }
+      .carousel-btn { width: 40px; height: 40px; font-size: .9rem; }
       .ring-img { height: 260px; }
       .ring-emoji { font-size: 4.5rem; }
       .ring-info { padding: 24px; }
@@ -795,28 +822,72 @@
   <div class="hero-diamond-wrap">
     <svg class="hero-diamond" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <linearGradient id="dg1" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%"   stop-color="#f0dea3" stop-opacity=".9"/>
-          <stop offset="40%"  stop-color="#c9a84c" stop-opacity=".7"/>
-          <stop offset="100%" stop-color="#7a6030" stop-opacity=".5"/>
-        </linearGradient>
-        <linearGradient id="dg2" x1="100%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%"   stop-color="#ffffff" stop-opacity=".15"/>
-          <stop offset="100%" stop-color="#c9a84c" stop-opacity=".05"/>
-        </linearGradient>
+        <radialGradient id="d-aura" cx="50%" cy="42%" r="52%">
+          <stop offset="0%"   stop-color="#d4b060" stop-opacity=".22"/>
+          <stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/>
+        </radialGradient>
       </defs>
-      <!-- Main diamond shape -->
-      <polygon points="100,10 180,80 100,190 20,80" fill="url(#dg1)" opacity=".85"/>
-      <!-- Facets -->
-      <polygon points="100,10 140,60 100,80 60,60"  fill="url(#dg2)" opacity=".8"/>
-      <polygon points="60,60 100,80 20,80"           fill="rgba(201,168,76,.12)"/>
-      <polygon points="140,60 180,80 100,80"         fill="rgba(255,255,255,.1)"/>
-      <polygon points="100,80 60,60 100,190"         fill="rgba(0,0,0,.15)"/>
-      <polygon points="100,80 140,60 100,190"        fill="rgba(201,168,76,.08)"/>
-      <!-- Highlight -->
-      <polygon points="100,10 130,50 100,42 70,50"  fill="rgba(255,255,255,.35)"/>
-      <!-- Outline -->
-      <polygon points="100,10 180,80 100,190 20,80" fill="none" stroke="rgba(201,168,76,.4)" stroke-width=".8"/>
+
+      <!-- Soft inner aura -->
+      <ellipse cx="100" cy="95" rx="85" ry="78" fill="url(#d-aura)"/>
+
+      <!-- ── CROWN (table y=16, girdle y=70) ── -->
+      <!-- Table — brightest facet -->
+      <polygon points="65,16 135,16 118,44 100,50 82,44"   fill="#f0f7ff" opacity=".96"/>
+      <!-- Left star facet -->
+      <polygon points="65,16 82,44 38,58"                  fill="#cce2f5" opacity=".88"/>
+      <!-- Right star facet (shadow side) -->
+      <polygon points="135,16 162,58 118,44"               fill="#7aaccc" opacity=".78"/>
+      <!-- Far-left sliver -->
+      <polygon points="12,70 38,58 65,16"                  fill="#4e88b0" opacity=".82"/>
+      <!-- Far-right sliver (darkest crown) -->
+      <polygon points="135,16 188,70 162,58"               fill="#18384e" opacity=".92"/>
+      <!-- Left inner crown -->
+      <polygon points="38,58 82,44 100,50 60,70"           fill="#8ec4dc" opacity=".72"/>
+      <!-- Right inner crown -->
+      <polygon points="162,58 140,70 100,50 118,44"        fill="#3a6888" opacity=".82"/>
+      <!-- Centre girdle triangle -->
+      <polygon points="60,70 100,50 140,70"                fill="#5a9ab8" opacity=".62"/>
+
+      <!-- Girdle line -->
+      <line x1="12" y1="70" x2="188" y2="70" stroke="#c9a84c" stroke-width="1.2" opacity=".65"/>
+
+      <!-- ── PAVILION (girdle y=70, culet y=182) ── -->
+      <!-- Far left (deep dark) -->
+      <polygon points="12,70 60,70 100,182"   fill="#1a3248" opacity=".92"/>
+      <!-- Left-centre (bright internal reflection) -->
+      <polygon points="60,70 100,70 100,182"  fill="#a8d2ea" opacity=".72"/>
+      <!-- Right-centre -->
+      <polygon points="100,70 140,70 100,182" fill="#3a6480" opacity=".78"/>
+      <!-- Far right (near black) -->
+      <polygon points="140,70 188,70 100,182" fill="#08181e" opacity=".96"/>
+
+      <!-- Culet specular point -->
+      <ellipse cx="100" cy="181" rx="2.5" ry="1.5" fill="white" opacity=".75"/>
+
+      <!-- Prismatic fire accents -->
+      <polygon points="65,16 74,27 52,42"    fill="#8ab8ff" opacity=".28"/>
+      <polygon points="155,52 172,64 188,70" fill="#ffb0c0" opacity=".22"/>
+
+      <!-- ── OUTLINES ── -->
+      <polygon points="65,16 135,16 188,70 100,182 12,70" fill="none" stroke="#c9a84c" stroke-width="1" opacity=".72"/>
+      <!-- Crown internal lines -->
+      <line x1="65"  y1="16"  x2="82"  y2="44"  stroke="rgba(255,255,255,.28)" stroke-width=".6"/>
+      <line x1="135" y1="16"  x2="118" y2="44"  stroke="rgba(255,255,255,.28)" stroke-width=".6"/>
+      <line x1="82"  y1="44"  x2="100" y2="50"  stroke="rgba(255,255,255,.22)" stroke-width=".6"/>
+      <line x1="118" y1="44"  x2="100" y2="50"  stroke="rgba(255,255,255,.22)" stroke-width=".6"/>
+      <line x1="38"  y1="58"  x2="82"  y2="44"  stroke="rgba(201,168,76,.28)"  stroke-width=".55"/>
+      <line x1="162" y1="58"  x2="118" y2="44"  stroke="rgba(201,168,76,.28)"  stroke-width=".55"/>
+      <line x1="38"  y1="58"  x2="60"  y2="70"  stroke="rgba(201,168,76,.22)"  stroke-width=".5"/>
+      <line x1="162" y1="58"  x2="140" y2="70"  stroke="rgba(201,168,76,.22)"  stroke-width=".5"/>
+      <line x1="100" y1="50"  x2="100" y2="70"  stroke="rgba(255,255,255,.18)" stroke-width=".5"/>
+      <!-- Pavilion internal lines -->
+      <line x1="60"  y1="70"  x2="100" y2="182" stroke="rgba(201,168,76,.28)"  stroke-width=".6"/>
+      <line x1="100" y1="70"  x2="100" y2="182" stroke="rgba(180,220,240,.32)" stroke-width=".6"/>
+      <line x1="140" y1="70"  x2="100" y2="182" stroke="rgba(201,168,76,.28)"  stroke-width=".6"/>
+
+      <!-- Table specular highlight -->
+      <polygon points="76,16 124,16 114,28 86,28" fill="white" opacity=".42"/>
     </svg>
   </div>
 
@@ -866,42 +937,52 @@
     </div>
     <p style="font-size:.7rem;color:var(--muted);max-width:280px;line-height:2;">Két exkluzív darab azonnali átvétellel — mindkettő teljes dokumentációval.</p>
   </div>
-  <div class="rings-grid">
-    <div class="ring-card reveal">
-      <div class="ring-img">
-        <div class="ring-emoji">💍</div>
-        <div class="ring-badge">Elérhető</div>
+  <div class="rings-carousel">
+    <div class="rings-track">
+      <div class="ring-card reveal">
+        <div class="ring-img">
+          <div class="ring-emoji">💍</div>
+          <div class="ring-badge">Elérhető</div>
+        </div>
+        <div class="ring-info">
+          <h3 class="ring-name">Solitaire No. 1</h3>
+          <p class="ring-spec">18K Fehér arany · 1.2ct Brilliáns csiszolású</p>
+          <p class="ring-price">7 800 000 Ft</p>
+          <ul class="ring-features">
+            <li>GIA tanúsítvány — D/VS1</li>
+            <li>4C minősítés + lézergravírozott azonosító</li>
+            <li>Kimberley Process — konfliktus-mentes</li>
+            <li>Eredeti minősítési dokumentáció mellékelve</li>
+          </ul>
+          <button class="btn-ring">Részletek & Időpontfoglalás</button>
+        </div>
       </div>
-      <div class="ring-info">
-        <h3 class="ring-name">Solitaire No. 1</h3>
-        <p class="ring-spec">18K Fehér arany · 1.2ct Brilliáns csiszolású</p>
-        <p class="ring-price">7 800 000 Ft</p>
-        <ul class="ring-features">
-          <li>GIA tanúsítvány — D/VS1</li>
-          <li>4C minősítés + lézergravírozott azonosító</li>
-          <li>Kimberley Process — konfliktus-mentes</li>
-          <li>Eredeti minősítési dokumentáció mellékelve</li>
-        </ul>
-        <button class="btn-ring">Részletek & Időpontfoglalás</button>
+      <div class="ring-card reveal">
+        <div class="ring-img" style="background:radial-gradient(ellipse at 50% 50%, #22182a 0%, #0e0c16 100%)">
+          <div class="ring-emoji">💍</div>
+          <div class="ring-badge">Elérhető</div>
+        </div>
+        <div class="ring-info">
+          <h3 class="ring-name">Pavé Eternity No. 2</h3>
+          <p class="ring-spec">18K Rozé arany · 0.85ct Emerald csiszolású</p>
+          <p class="ring-price">6 200 000 Ft</p>
+          <ul class="ring-features">
+            <li>IGI tanúsítvány — E/VVS2</li>
+            <li>4C minősítés + lézergravírozott azonosító</li>
+            <li>Kimberley Process — konfliktus-mentes</li>
+            <li>Eredeti minősítési dokumentáció mellékelve</li>
+          </ul>
+          <button class="btn-ring">Részletek & Időpontfoglalás</button>
+        </div>
       </div>
     </div>
-    <div class="ring-card reveal">
-      <div class="ring-img" style="background:radial-gradient(ellipse at 50% 50%, #22182a 0%, #0e0c16 100%)">
-        <div class="ring-emoji">💍</div>
-        <div class="ring-badge">Elérhető</div>
+    <div class="carousel-nav">
+      <button class="carousel-btn carousel-prev" aria-label="Előző">&#8592;</button>
+      <div class="carousel-dots">
+        <button class="carousel-dot active" data-idx="0"></button>
+        <button class="carousel-dot" data-idx="1"></button>
       </div>
-      <div class="ring-info">
-        <h3 class="ring-name">Pavé Eternity No. 2</h3>
-        <p class="ring-spec">18K Rozé arany · 0.85ct Emerald csiszolású</p>
-        <p class="ring-price">6 200 000 Ft</p>
-        <ul class="ring-features">
-          <li>IGI tanúsítvány — E/VVS2</li>
-          <li>4C minősítés + lézergravírozott azonosító</li>
-          <li>Kimberley Process — konfliktus-mentes</li>
-          <li>Eredeti minősítési dokumentáció mellékelve</li>
-        </ul>
-        <button class="btn-ring">Részletek & Időpontfoglalás</button>
-      </div>
+      <button class="carousel-btn carousel-next" aria-label="Következő">&#8594;</button>
     </div>
   </div>
 </section>
@@ -1186,6 +1267,39 @@ sparkStyle.textContent = `@keyframes spark-fade {
   100% { transform:translate(-50%,-50%) scale(3) translateY(-20px); opacity:0; }
 }`;
 document.head.appendChild(sparkStyle);
+
+// ── Carousel ──
+(function() {
+  const track   = document.querySelector('.rings-track');
+  if (!track) return;
+  const cards   = [...track.children];
+  const dots    = [...document.querySelectorAll('.carousel-dot')];
+  const prevBtn = document.querySelector('.carousel-prev');
+  const nextBtn = document.querySelector('.carousel-next');
+  let current   = 0;
+
+  function goTo(idx) {
+    current = Math.max(0, Math.min(idx, cards.length - 1));
+    track.style.transform = `translateX(-${current * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === cards.length - 1;
+  }
+
+  prevBtn.addEventListener('click', () => goTo(current - 1));
+  nextBtn.addEventListener('click', () => goTo(current + 1));
+  dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
+
+  // Touch swipe
+  let startX = 0;
+  track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener('touchend',   e => {
+    const dx = startX - e.changedTouches[0].clientX;
+    if (Math.abs(dx) > 48) goTo(current + (dx > 0 ? 1 : -1));
+  });
+
+  goTo(0);
+})();
 </script>
 </body>
 </html>
