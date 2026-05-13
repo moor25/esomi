@@ -331,19 +331,25 @@
       will-change: transform;
     }
     .rings-track .ring-card { flex: 0 0 100%; min-width: 0; }
-    .carousel-nav {
-      display: flex; align-items: center; justify-content: center;
-      gap: 28px; padding: 36px 0 0;
-    }
+    /* Nyilak a kép bal/jobb szélén lebegnek */
     .carousel-btn {
-      width: 46px; height: 46px; border-radius: 50%;
-      background: none; border: 1px solid rgba(201,168,76,.3);
+      position: absolute; top: 190px; transform: translateY(-50%);
+      z-index: 20; width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(6,6,14,.75); backdrop-filter: blur(8px);
+      border: 1px solid rgba(201,168,76,.3);
       color: var(--gold); cursor: pointer; font-size: 1rem;
       display: flex; align-items: center; justify-content: center;
-      transition: border-color .2s, opacity .2s;
+      transition: border-color .2s, background .2s, opacity .2s;
     }
-    .carousel-btn:hover { border-color: var(--gold); }
-    .carousel-btn:disabled { opacity: .25; cursor: default; pointer-events: none; }
+    .carousel-prev { left: 16px; }
+    .carousel-next { right: 16px; }
+    .carousel-btn:hover { border-color: var(--gold); background: rgba(6,6,14,.95); }
+    .carousel-btn:disabled { opacity: .2; cursor: default; pointer-events: none; }
+    /* Csak a pontok maradnak lent, minimális helyen */
+    .carousel-nav {
+      display: flex; justify-content: center;
+      padding: 20px 0 0;
+    }
     .carousel-dots { display: flex; gap: 9px; align-items: center; }
     .carousel-dot {
       width: 6px; height: 6px; border-radius: 50%; padding: 0; border: none;
@@ -794,7 +800,7 @@
       /* Rings */
       .rings-header { margin-bottom: 36px; flex-direction: column; gap: 12px; }
       .rings-header p { max-width: 100% !important; }
-      .carousel-btn { width: 40px; height: 40px; font-size: .9rem; }
+      .carousel-btn { width: 40px; height: 40px; font-size: .9rem; top: 130px; }
       .ring-img { height: 260px; }
       .ring-emoji { font-size: 4.5rem; }
       .ring-info { padding: 24px; }
@@ -1081,13 +1087,13 @@
         </div>
       </div>
     </div>
+    <button class="carousel-btn carousel-prev" aria-label="Előző">&#8592;</button>
+    <button class="carousel-btn carousel-next" aria-label="Következő">&#8594;</button>
     <div class="carousel-nav">
-      <button class="carousel-btn carousel-prev" aria-label="Előző">&#8592;</button>
       <div class="carousel-dots">
         <button class="carousel-dot active" data-idx="0"></button>
         <button class="carousel-dot" data-idx="1"></button>
       </div>
-      <button class="carousel-btn carousel-next" aria-label="Következő">&#8594;</button>
     </div>
   </div>
 </section>
