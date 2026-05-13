@@ -358,6 +358,69 @@
       transition: background .25s, transform .25s;
     }
     .carousel-dot.active { background: var(--gold); transform: scale(1.4); }
+
+    /* ══════════════════════════════════════
+       STONE CONFIGURATOR
+    ══════════════════════════════════════ */
+    .configurator-section { padding: 100px 64px; }
+    .config-layout {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center; margin-top: 56px;
+    }
+    .config-ring-wrap { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+    .config-ring-svg {
+      width: 180px; height: 220px;
+      filter: drop-shadow(0 0 28px rgba(201,168,76,.32));
+    }
+    .config-stone-main { transition: fill .45s ease; }
+    .config-ring-label { font-size: .6rem; letter-spacing: .2em; color: var(--muted); text-transform: uppercase; text-align: center; }
+    /* Stone carousel */
+    .stone-carousel { position: relative; }
+    .stone-track-clip { overflow: hidden; position: relative; }
+    .stone-track {
+      display: flex;
+      transition: transform .5s cubic-bezier(.25,.1,.25,1);
+      will-change: transform;
+    }
+    .stone-slide {
+      flex: 0 0 100%; min-width: 0;
+      padding: 44px 40px; text-align: center;
+      background: var(--card); box-shadow: 0 0 0 1px var(--border);
+    }
+    .stone-gem-wrap { width: 72px; height: 88px; margin: 0 auto 28px; }
+    .stone-gem-svg { width: 100%; height: 100%; }
+    .stone-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 300; margin-bottom: 6px; }
+    .stone-grade { font-size: .62rem; letter-spacing: .14em; color: var(--muted); margin-bottom: 20px; }
+    .stone-price { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--gold2); font-weight: 300; margin-bottom: 28px; }
+    .stone-select-btn {
+      display: inline-block; padding: 11px 36px;
+      border: 1px solid rgba(201,168,76,.35); background: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .62rem; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--muted); cursor: pointer; transition: border-color .3s, color .3s;
+    }
+    .stone-select-btn:hover { border-color: var(--gold); color: var(--gold2); }
+    .stone-nav-btn {
+      position: absolute; top: 50%; transform: translateY(-50%); z-index: 10;
+      width: 42px; height: 42px; border-radius: 50%;
+      background: rgba(6,6,14,.75); backdrop-filter: blur(8px);
+      border: 1px solid rgba(201,168,76,.3); color: var(--gold);
+      cursor: pointer; font-size: .95rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color .2s, opacity .2s;
+    }
+    .stone-prev-btn { left: 14px; }
+    .stone-next-btn { right: 14px; }
+    .stone-nav-btn:hover { border-color: var(--gold); }
+    .stone-nav-btn:disabled { opacity: .2; cursor: default; pointer-events: none; }
+    .stone-nav-dots { display: flex; justify-content: center; gap: 8px; padding: 20px 0 0; }
+    .stone-dot {
+      width: 5px; height: 5px; border-radius: 50%; padding: 0; border: none;
+      background: rgba(201,168,76,.28); cursor: pointer;
+      transition: background .25s, transform .25s;
+    }
+    .stone-dot.active { background: var(--gold); transform: scale(1.4); }
+
     .ring-card {
       background: var(--card);
       overflow: hidden; cursor: pointer;
@@ -812,6 +875,9 @@
       #custom { padding: 72px 24px !important; }
       .custom-layout { grid-template-columns: 1fr; gap: 40px; }
       .custom-visual { display: none; }
+      .config-layout { grid-template-columns: 1fr; gap: 40px; }
+      .config-ring-wrap { order: 2; }
+      .config-ring-svg { width: 120px; height: 148px; }
 
       /* Stones */
       .stones-grid { grid-template-columns: 1fr; margin-top: 40px; }
@@ -1098,6 +1164,112 @@
         <button class="carousel-dot" data-idx="1"></button>
       </div>
     </div>
+  </div>
+</section>
+
+<div class="divider"><span>◆</span></div>
+
+<!-- CONFIGURATOR -->
+<section id="configurator" class="configurator-section">
+  <p class="section-label reveal">Személyes választás</p>
+  <h2 class="section-title reveal">Válaszd ki <em>a kövét</em></h2>
+  <p class="section-body reveal">Ugyanaz a foglalat — a kő dönt az árról, a karakterről és az egyéniségről.</p>
+  <div class="config-layout">
+
+    <!-- Bal: gyűrű SVG, kő cserélhető -->
+    <div class="config-ring-wrap reveal">
+      <svg class="config-ring-svg" viewBox="0 0 160 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M38 118 L38 144 Q38 168 80 168 Q122 168 122 144 L122 118" stroke="#c9a84c" stroke-width="2" fill="rgba(201,168,76,.07)" opacity=".68"/>
+        <ellipse cx="80" cy="118" rx="42" ry="12" stroke="#c9a84c" stroke-width="2" fill="rgba(201,168,76,.1)" opacity=".65"/>
+        <ellipse cx="80" cy="118" rx="26" ry="7.5" stroke="#c9a84c" stroke-width="1" fill="rgba(0,0,0,.45)" opacity=".45"/>
+        <path d="M54 118 L54 142 Q54 163 80 163 Q106 163 106 142 L106 118" stroke="rgba(201,168,76,.28)" stroke-width="1" fill="none"/>
+        <line x1="70" y1="108" x2="67" y2="90" stroke="#c9a84c" stroke-width="1.4" opacity=".52"/>
+        <line x1="90" y1="108" x2="93" y2="90" stroke="#c9a84c" stroke-width="1.4" opacity=".52"/>
+        <!-- Kő (JS változtatja a fill-t) -->
+        <polygon class="config-stone-main" points="80,18 104,52 80,75 56,52" fill="rgba(225,242,255,.82)" stroke="#c9a84c" stroke-width="1.5" opacity=".9"/>
+        <line x1="66" y1="36" x2="94" y2="36" stroke="#c9a84c" stroke-width=".8" opacity=".4"/>
+        <line x1="80" y1="18" x2="80" y2="75" stroke="#c9a84c" stroke-width=".5" opacity=".18"/>
+        <line x1="56" y1="52" x2="104" y2="52" stroke="#c9a84c" stroke-width=".5" opacity=".18"/>
+        <polygon points="80,18 90,32 80,37 70,32" fill="rgba(255,255,255,.18)"/>
+      </svg>
+      <p class="config-ring-label">Solitaire Foglalat · 18K Fehér arany</p>
+    </div>
+
+    <!-- Jobb: kő-választó carousel -->
+    <div class="config-stones reveal">
+      <div class="stone-carousel">
+        <div class="stone-track-clip">
+          <div class="stone-track">
+
+            <!-- 1. Fehér Brilliáns -->
+            <div class="stone-slide">
+              <div class="stone-gem-wrap">
+                <svg class="stone-gem-svg" viewBox="0 0 70 82" fill="none"><polygon points="35,4 60,28 35,60 10,28" fill="rgba(225,242,255,.82)" stroke="#c9a84c" stroke-width="1.2"/><line x1="22" y1="18" x2="48" y2="18" stroke="#c9a84c" stroke-width=".8" opacity=".38"/><line x1="35" y1="4" x2="35" y2="60" stroke="#c9a84c" stroke-width=".5" opacity=".18"/><line x1="10" y1="28" x2="60" y2="28" stroke="#c9a84c" stroke-width=".5" opacity=".18"/><polygon points="35,4 43,15 35,19 27,15" fill="rgba(255,255,255,.22)"/></svg>
+              </div>
+              <h3 class="stone-title">Fehér Brilliáns</h3>
+              <p class="stone-grade">GIA · D / VS1 · 1.2 ct</p>
+              <p class="stone-price">7 800 000 Ft</p>
+              <button class="stone-select-btn">Időpontot kérek</button>
+            </div>
+
+            <!-- 2. Fancy Yellow -->
+            <div class="stone-slide">
+              <div class="stone-gem-wrap">
+                <svg class="stone-gem-svg" viewBox="0 0 70 82" fill="none"><polygon points="35,4 60,28 35,60 10,28" fill="rgba(255,210,40,.80)" stroke="#c9a84c" stroke-width="1.2"/><line x1="22" y1="18" x2="48" y2="18" stroke="#c9a84c" stroke-width=".8" opacity=".38"/><line x1="35" y1="4" x2="35" y2="60" stroke="#c9a84c" stroke-width=".5" opacity=".18"/><line x1="10" y1="28" x2="60" y2="28" stroke="#c9a84c" stroke-width=".5" opacity=".18"/><polygon points="35,4 43,15 35,19 27,15" fill="rgba(255,255,255,.22)"/></svg>
+              </div>
+              <h3 class="stone-title">Fancy Yellow</h3>
+              <p class="stone-grade">GIA · Fancy Yellow / VS2 · 1.1 ct</p>
+              <p class="stone-price">8 400 000 Ft</p>
+              <button class="stone-select-btn">Időpontot kérek</button>
+            </div>
+
+            <!-- 3. Kék Zafír -->
+            <div class="stone-slide">
+              <div class="stone-gem-wrap">
+                <svg class="stone-gem-svg" viewBox="0 0 70 82" fill="none"><polygon points="35,4 60,28 35,60 10,28" fill="rgba(40,80,210,.72)" stroke="#c9a84c" stroke-width="1.2"/><line x1="22" y1="18" x2="48" y2="18" stroke="#c9a84c" stroke-width=".8" opacity=".38"/><line x1="35" y1="4" x2="35" y2="60" stroke="#c9a84c" stroke-width=".5" opacity=".18"/><line x1="10" y1="28" x2="60" y2="28" stroke="#c9a84c" stroke-width=".5" opacity=".18"/><polygon points="35,4 43,15 35,19 27,15" fill="rgba(255,255,255,.22)"/></svg>
+              </div>
+              <h3 class="stone-title">Kék Zafír</h3>
+              <p class="stone-grade">GIA · Ceylon Blue · 2.1 ct</p>
+              <p class="stone-price">6 200 000 Ft</p>
+              <button class="stone-select-btn">Időpontot kérek</button>
+            </div>
+
+            <!-- 4. Smaragd -->
+            <div class="stone-slide">
+              <div class="stone-gem-wrap">
+                <svg class="stone-gem-svg" viewBox="0 0 70 82" fill="none"><polygon points="35,4 60,28 35,60 10,28" fill="rgba(18,148,65,.72)" stroke="#c9a84c" stroke-width="1.2"/><line x1="22" y1="18" x2="48" y2="18" stroke="#c9a84c" stroke-width=".8" opacity=".38"/><line x1="35" y1="4" x2="35" y2="60" stroke="#c9a84c" stroke-width=".5" opacity=".18"/><line x1="10" y1="28" x2="60" y2="28" stroke="#c9a84c" stroke-width=".5" opacity=".18"/><polygon points="35,4 43,15 35,19 27,15" fill="rgba(255,255,255,.22)"/></svg>
+              </div>
+              <h3 class="stone-title">Smaragd</h3>
+              <p class="stone-grade">GIA · Colombian · 1.8 ct</p>
+              <p class="stone-price">9 100 000 Ft</p>
+              <button class="stone-select-btn">Időpontot kérek</button>
+            </div>
+
+            <!-- 5. Rubint -->
+            <div class="stone-slide">
+              <div class="stone-gem-wrap">
+                <svg class="stone-gem-svg" viewBox="0 0 70 82" fill="none"><polygon points="35,4 60,28 35,60 10,28" fill="rgba(190,22,40,.78)" stroke="#c9a84c" stroke-width="1.2"/><line x1="22" y1="18" x2="48" y2="18" stroke="#c9a84c" stroke-width=".8" opacity=".38"/><line x1="35" y1="4" x2="35" y2="60" stroke="#c9a84c" stroke-width=".5" opacity=".18"/><line x1="10" y1="28" x2="60" y2="28" stroke="#c9a84c" stroke-width=".5" opacity=".18"/><polygon points="35,4 43,15 35,19 27,15" fill="rgba(255,255,255,.22)"/></svg>
+              </div>
+              <h3 class="stone-title">Rubint</h3>
+              <p class="stone-grade">GIA · Pigeon Blood · 1.5 ct</p>
+              <p class="stone-price">11 200 000 Ft</p>
+              <button class="stone-select-btn">Időpontot kérek</button>
+            </div>
+
+          </div>
+        </div>
+        <button class="stone-nav-btn stone-prev-btn" aria-label="Előző">&#8592;</button>
+        <button class="stone-nav-btn stone-next-btn" aria-label="Következő">&#8594;</button>
+        <div class="stone-nav-dots">
+          <button class="stone-dot active" data-idx="0"></button>
+          <button class="stone-dot" data-idx="1"></button>
+          <button class="stone-dot" data-idx="2"></button>
+          <button class="stone-dot" data-idx="3"></button>
+          <button class="stone-dot" data-idx="4"></button>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -1399,6 +1571,43 @@ sparkStyle.textContent = `@keyframes spark-fade {
   100% { transform:translate(-50%,-50%) scale(3) translateY(-20px); opacity:0; }
 }`;
 document.head.appendChild(sparkStyle);
+
+// ── Stone configurator ──
+(function() {
+  const sTrack = document.querySelector('.stone-track');
+  if (!sTrack) return;
+  const sSlides  = [...sTrack.children];
+  const sDots    = [...document.querySelectorAll('.stone-dot')];
+  const sPrev    = document.querySelector('.stone-prev-btn');
+  const sNext    = document.querySelector('.stone-next-btn');
+  const ringStone = document.querySelector('.config-stone-main');
+  let sCur = 0;
+  const colors = [
+    'rgba(225,242,255,.82)',
+    'rgba(255,210,40,.80)',
+    'rgba(40,80,210,.72)',
+    'rgba(18,148,65,.72)',
+    'rgba(190,22,40,.78)',
+  ];
+  function goToStone(idx) {
+    sCur = Math.max(0, Math.min(idx, sSlides.length - 1));
+    sTrack.style.transform = `translateX(-${sCur * 100}%)`;
+    sDots.forEach((d, i) => d.classList.toggle('active', i === sCur));
+    sPrev.disabled = sCur === 0;
+    sNext.disabled = sCur === sSlides.length - 1;
+    if (ringStone) ringStone.setAttribute('fill', colors[sCur]);
+  }
+  sPrev.addEventListener('click', () => goToStone(sCur - 1));
+  sNext.addEventListener('click', () => goToStone(sCur + 1));
+  sDots.forEach((d, i) => d.addEventListener('click', () => goToStone(i)));
+  let sX = 0;
+  sTrack.addEventListener('touchstart', e => { sX = e.touches[0].clientX; }, { passive: true });
+  sTrack.addEventListener('touchend',   e => {
+    const dx = sX - e.changedTouches[0].clientX;
+    if (Math.abs(dx) > 48) goToStone(sCur + (dx > 0 ? 1 : -1));
+  });
+  goToStone(0);
+})();
 
 // ── Logo → top ──
 document.getElementById('logo-home').addEventListener('click', () =>
