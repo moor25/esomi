@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ESOMI — Certified Diamond Jewellery</title>
+  <script>
+    history.scrollRestoration = 'manual';
+    if (window.location.hash) {
+      history.replaceState(null, null, window.location.pathname + window.location.search);
+    }
+    window.scrollTo(0, 0);
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black:  #080810;
+      --deep:   #0d0c12;
+      --card:   #13121a;
+      --border: #26243080;
+      --gold:   #c9a84c;
+      --gold2:  #e8d5a3;
+      --white:  #f5f3ef;
+      --muted:  #8a8490;
+    }
+    html { scroll-behavior: auto; }
+    html.smooth { scroll-behavior: smooth; }
+    body { font-family: 'Montserrat', sans-serif; background: var(--black); color: var(--white); overflow-x: hidden; }
+
+    /* ══════════════════════════════════════
+       CANVAS PARTICLES
+    ══════════════════════════════════════ */
+    #particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+
+    /* ══════════════════════════════════════
+       NAV
+    ══════════════════════════════════════ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 28px 64px;
+      transition: background .5s, padding .5s;
+    }
+    nav.scrolled { background: rgba(8,8,16,.92); backdrop-filter: blur(16px); padding: 18px 64px; }
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem; font-weight: 300; letter-spacing: .28em;
+      color: var(--gold2); position: relative; z-index: 1;
+    }
+    .logo span { color: var(--gold); font-weight: 600; }
+    nav ul { list-style: none; display: flex; gap: 44px; }
+    nav ul a {
+      font-size: .68rem; letter-spacing: .16em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none; transition: color .3s;
+      position: relative; padding-bottom: 4px;
+    }
+    nav ul a::after {
+      content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px;
+      background: var(--gold); transition: width .3s ease;
+    }
+    nav ul a:hover { color: var(--gold2); }
+    nav ul a:hover::after { width: 100%; }
+
+    /* ══════════════════════════════════════
+       HERO
+    ══════════════════════════════════════ */
+    .hero {
+      min-height: 100vh; position: relative;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 120px 40px 160px;
+      overflow: hidden;
+    }
+
+    /* Static aurora background */
+    .aurora {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 40%, rgba(201,168,76,.07) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 20% 80%, rgba(201,168,76,.03) 0%, transparent 60%),
+        radial-gradient(ellipse 30% 25% at 80% 20%, rgba(201,168,76,.04) 0%, transparent 60%);
+    }
+
+    /* Big central diamond SVG */
+    .hero-diamond-wrap {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -55%);
+      width: 420px; height: 420px;
+      pointer-events: none;
+    }
+    /* Glow a wrap-en van (statikus), az animáció csak a belső SVG-n fut */
+    .hero-diamond-wrap::after {
+      content: '';
+      position: absolute; inset: -40px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,168,76,.18) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero-diamond {
+      width: 100%; height: 100%;
+      animation: diamond-float 5s ease-in-out infinite;
+      will-change: transform;
+    }
+    @keyframes diamond-float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      33%       { transform: translateY(-18px) rotate(1.5deg); }
+      66%       { transform: translateY(-8px) rotate(-1deg); }
+    }
+
+    /* Orbiting sparkles */
+    .orbit {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -55%);
+      width: 420px; height: 420px;
+      pointer-events: none;
+    }
+    .orbit-ring {
+      position: absolute; inset: -60px;
+      border-radius: 50%;
+      animation: orbit-spin linear infinite;
+    }
+    .orbit-ring-1 { animation-duration: 8s; }
+    .orbit-ring-2 { animation-duration: 13s; animation-direction: reverse; inset: -100px; }
+    .orbit-ring-3 { animation-duration: 19s; inset: -140px; }
+    @keyframes orbit-spin { to { transform: rotate(360deg); } }
+    .sparkle {
+      position: absolute; top: 0; left: 50%;
+      transform: translateX(-50%);
+      animation: sparkle-pulse 2s ease-in-out infinite;
+    }
+    .sparkle svg { display: block; }
+    @keyframes sparkle-pulse {
+      0%, 100% { opacity: .5; transform: translateX(-50%) scale(1); }
+      50%       { opacity: 1; transform: translateX(-50%) scale(1.4); }
+    }
+    .orbit-ring-2 .sparkle { animation-delay: -.8s; }
+    .orbit-ring-3 .sparkle { animation-delay: -1.4s; }
+
+    /* Hero text */
+    .hero-content { position: relative; z-index: 10; }
+    .hero-eyebrow {
+      font-size: .68rem; letter-spacing: .35em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 28px;
+      display: flex; align-items: center; justify-content: center; gap: 16px;
+      opacity: 0; animation: fade-up .8s ease .2s forwards;
+    }
+    .hero-eyebrow::before, .hero-eyebrow::after {
+      content: ''; display: block; width: 36px; height: 1px;
+      background: var(--gold); opacity: .6;
+      animation: line-grow .8s ease .2s both;
+    }
+    @keyframes line-grow { from { width: 0; } to { width: 36px; } }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.2rem, 7.5vw, 6.8rem);
+      font-weight: 300; line-height: 1.05; letter-spacing: .04em;
+      margin-bottom: 32px;
+      opacity: 0; animation: fade-up .9s ease .4s forwards;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold2);
+    }
+    .hero-sub {
+      font-size: .78rem; letter-spacing: .1em; line-height: 2.1;
+      color: var(--muted); max-width: 460px; margin: 0 auto 52px;
+      opacity: 0; animation: fade-up .8s ease .6s forwards;
+    }
+    .btn-primary {
+      display: inline-block; padding: 16px 48px;
+      border: 1px solid var(--gold); color: var(--gold2);
+      font-size: .68rem; letter-spacing: .2em; text-transform: uppercase;
+      text-decoration: none; position: relative; overflow: hidden;
+      opacity: 0; animation: fade-up .8s ease .8s forwards;
+      transition: color .4s;
+    }
+    .btn-primary::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,.15), transparent);
+      transform: translateX(-100%);
+      animation: btn-shimmer 3s ease 2s infinite;
+    }
+    .btn-primary::after {
+      content: ''; position: absolute; inset: 0;
+      background: var(--gold); transform: scaleX(0);
+      transform-origin: left; transition: transform .35s ease; z-index: -1;
+    }
+    .btn-primary:hover::after { transform: scaleX(1); }
+    .btn-primary:hover { color: var(--black); }
+    @keyframes btn-shimmer {
+      0%   { transform: translateX(-100%); }
+      40%, 100% { transform: translateX(200%); }
+    }
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .scroll-hint {
+      position: absolute; bottom: 36px; left: 0; right: 0;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      font-size: .58rem; letter-spacing: .22em; color: var(--muted);
+      opacity: 0; animation: scroll-hint-fade .8s ease 1.2s forwards;
+    }
+    @keyframes scroll-hint-fade {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    .scroll-line {
+      width: 1px; height: 52px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scroll-draw 1.8s ease-in-out infinite;
+    }
+    @keyframes scroll-draw {
+      0%        { transform: scaleY(0) translateY(0); transform-origin: top; opacity: 1; }
+      50%       { transform: scaleY(1) translateY(0); transform-origin: top; opacity: 1; }
+      50.01%    { transform: scaleY(1) translateY(0); transform-origin: bottom; }
+      100%      { transform: scaleY(0) translateY(0); transform-origin: bottom; opacity: .3; }
+    }
+
+    /* ══════════════════════════════════════
+       TRUST BAR
+    ══════════════════════════════════════ */
+    .trust-bar {
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      padding: 44px 64px;
+      display: flex; justify-content: space-around; flex-wrap: wrap; gap: 32px;
+      position: relative; z-index: 10; background: var(--deep);
+    }
+    .trust-item { display: flex; align-items: center; gap: 18px; }
+    .trust-icon {
+      font-size: 1.5rem; color: var(--gold);
+      animation: icon-bounce 3s ease-in-out infinite;
+      animation-play-state: paused;
+    }
+    .trust-item:nth-child(2) .trust-icon { animation-delay: -.75s; }
+    .trust-item:nth-child(3) .trust-icon { animation-delay: -1.5s; }
+    .trust-item:nth-child(4) .trust-icon { animation-delay: -2.25s; }
+    @keyframes icon-bounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-5px); }
+    }
+    .trust-text strong {
+      display: block; font-size: .7rem; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--white); margin-bottom: 4px;
+    }
+    .trust-text span { font-size: .65rem; color: var(--muted); }
+
+    /* ══════════════════════════════════════
+       SECTIONS GENERAL
+    ══════════════════════════════════════ */
+    section { padding: 120px 64px; position: relative; z-index: 10; }
+    .section-label {
+      font-size: .64rem; letter-spacing: .32em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.4rem); font-weight: 300; line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .section-title em {
+      font-style: italic;
+      color: var(--gold2);
+    }
+    .section-body { font-size: .76rem; line-height: 2.1; color: var(--muted); max-width: 540px; }
+
+    /* reveal */
+    .reveal { opacity: 0; transform: translateY(32px); transition: opacity .9s ease, transform .9s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ══════════════════════════════════════
+       RINGS
+    ══════════════════════════════════════ */
+    .rings-section { background: var(--deep); }
+    .rings-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 64px; flex-wrap: wrap; gap: 24px; }
+    .rings-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2px; }
+    .ring-card {
+      background: var(--card); border: 1px solid var(--border);
+      overflow: hidden; cursor: pointer;
+      transition: border-color .4s, box-shadow .4s;
+    }
+    .ring-card:hover {
+      border-color: rgba(201,168,76,.6);
+      box-shadow: 0 0 60px rgba(201,168,76,.08), inset 0 0 40px rgba(201,168,76,.03);
+    }
+    .ring-img {
+      height: 380px; overflow: hidden; position: relative;
+      background: radial-gradient(ellipse at 50% 50%, #1e1a28 0%, #0d0c14 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .ring-emoji {
+      font-size: 6.5rem;
+      filter: drop-shadow(0 0 30px rgba(201,168,76,.4));
+      transition: transform .6s ease, filter .6s ease;
+      animation: ring-idle 4s ease-in-out infinite;
+      animation-play-state: paused;
+    }
+    .ring-card:nth-child(2) .ring-emoji { animation-delay: -2s; }
+    @keyframes ring-idle {
+      0%, 100% { transform: translateY(0) rotate(-4deg) scale(1); }
+      50%       { transform: translateY(-12px) rotate(4deg) scale(1.05); }
+    }
+    .ring-card:hover .ring-emoji {
+      transform: translateY(-16px) rotate(0deg) scale(1.12) !important;
+      filter: drop-shadow(0 0 50px rgba(201,168,76,.7));
+      animation-play-state: paused;
+    }
+    /* Shimmer overlay on card hover */
+    .ring-img::after {
+      content: '';
+      position: absolute; top: -100%; left: -100%;
+      width: 60%; height: 250%;
+      background: linear-gradient(105deg, transparent 40%, rgba(201,168,76,.08) 50%, transparent 60%);
+      transition: left 0s, top 0s;
+    }
+    .ring-card:hover .ring-img::after {
+      animation: card-shimmer .6s ease forwards;
+    }
+    @keyframes card-shimmer {
+      from { left: -100%; top: -100%; }
+      to   { left: 200%; top: -100%; }
+    }
+    .ring-badge {
+      position: absolute; top: 20px; right: 20px;
+      padding: 6px 14px; border: 1px solid var(--gold);
+      font-size: .58rem; letter-spacing: .15em; text-transform: uppercase; color: var(--gold);
+      animation: badge-glow 2.5s ease-in-out infinite;
+      animation-play-state: paused;
+    }
+    @keyframes badge-glow {
+      0%, 100% { box-shadow: 0 0 8px rgba(201,168,76,.2); }
+      50%       { box-shadow: 0 0 20px rgba(201,168,76,.5); }
+    }
+    .ring-info { padding: 36px; }
+    .ring-name { font-family: 'Cormorant Garamond', serif; font-size: 1.55rem; font-weight: 400; margin-bottom: 8px; }
+    .ring-spec { font-size: .65rem; color: var(--muted); letter-spacing: .1em; margin-bottom: 20px; }
+    .ring-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.9rem; color: var(--gold2); font-weight: 300; margin-bottom: 20px;
+    }
+    .ring-features { list-style: none; display: flex; flex-direction: column; gap: 9px; margin-bottom: 28px; }
+    .ring-features li { font-size: .66rem; color: var(--muted); display: flex; align-items: center; gap: 10px; }
+    .ring-features li::before { content: '◆'; font-size: .4rem; color: var(--gold); }
+    .btn-ring {
+      display: block; width: 100%; padding: 14px;
+      border: 1px solid var(--border); background: transparent;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .65rem; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--muted); cursor: pointer; transition: all .3s; position: relative; overflow: hidden;
+    }
+    .btn-ring::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,.1), transparent);
+      transform: translateX(-200%); transition: transform .4s ease;
+    }
+    .btn-ring:hover { border-color: var(--gold); color: var(--gold2); }
+    .btn-ring:hover::before { transform: translateX(200%); }
+
+    /* ══════════════════════════════════════
+       CUSTOM
+    ══════════════════════════════════════ */
+    .custom-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .custom-visual {
+      position: relative; aspect-ratio: 1;
+      display: flex; align-items: center; justify-content: center;
+    }
+    /* Rotating hex rings */
+    .hex-ring {
+      position: absolute; border-radius: 50%;
+      border: 1px solid rgba(201,168,76,.15);
+    }
+    .hex-ring-1 { inset: 0; animation: hex-spin1 12s linear infinite; }
+    .hex-ring-2 { inset: 10%; animation: hex-spin2 18s linear infinite; border-style: dashed; }
+    .hex-ring-3 { inset: 22%; animation: hex-spin1 8s linear infinite; border-color: rgba(201,168,76,.1); }
+    @keyframes hex-spin1 { to { transform: rotate(360deg); } }
+    @keyframes hex-spin2 { to { transform: rotate(-360deg); } }
+    .hex-dot {
+      position: absolute; top: 0; left: 50%;
+      width: 6px; height: 6px; margin-left: -3px; margin-top: -3px;
+      background: var(--gold); border-radius: 50%;
+      box-shadow: 0 0 10px var(--gold);
+    }
+    .center-gem {
+      font-size: 5rem; position: relative; z-index: 2;
+      filter: drop-shadow(0 0 30px rgba(201,168,76,.4));
+      animation: gem-spin 6s ease-in-out infinite;
+      animation-play-state: paused;
+    }
+    @keyframes gem-spin {
+      0%, 100% { transform: scale(1) rotate(-5deg); }
+      50%       { transform: scale(1.1) rotate(5deg); }
+    }
+    .steps { list-style: none; display: flex; flex-direction: column; gap: 32px; margin-top: 40px; }
+    .step { display: flex; gap: 24px; }
+    .step-num {
+      font-family: 'Cormorant Garamond', serif; font-size: 2.6rem;
+      color: var(--gold); opacity: .35; line-height: 1; flex-shrink: 0; width: 44px;
+      transition: opacity .3s;
+    }
+    .step:hover .step-num { opacity: .8; }
+    .step-text strong { display: block; font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--white); margin-bottom: 6px; }
+    .step-text span { font-size: .7rem; color: var(--muted); line-height: 1.9; }
+
+    /* ══════════════════════════════════════
+       STONES
+    ══════════════════════════════════════ */
+    .stones-section { background: var(--deep); }
+    .stones-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; margin-top: 64px; }
+    .stone-cell {
+      background: var(--card); border: 1px solid var(--border);
+      padding: 52px 36px; transition: border-color .4s, background .4s;
+      position: relative; overflow: hidden;
+    }
+    .stone-cell::before {
+      content: ''; position: absolute; top: -40px; right: -40px;
+      width: 120px; height: 120px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,168,76,.06), transparent 70%);
+      transition: transform .6s ease;
+    }
+    .stone-cell:hover { border-color: rgba(201,168,76,.4); }
+    .stone-cell:hover::before { transform: scale(2); }
+    .stone-icon {
+      font-size: 2.8rem; margin-bottom: 22px; display: block;
+      animation: stone-float 4s ease-in-out infinite;
+    }
+    .stone-cell:nth-child(2) .stone-icon { animation-delay: -1.3s; }
+    .stone-cell:nth-child(3) .stone-icon { animation-delay: -2.6s; }
+    .stone-icon {
+      filter: drop-shadow(0 4px 16px rgba(201,168,76,.25));
+      animation-play-state: paused;
+    }
+    @keyframes stone-float {
+      0%, 100% { transform: translateY(0) rotate(-3deg); }
+      50%       { transform: translateY(-10px) rotate(3deg); }
+    }
+    .stone-name { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; margin-bottom: 10px; }
+    .stone-desc { font-size: .7rem; color: var(--muted); line-height: 1.95; }
+
+    /* ══════════════════════════════════════
+       CERTIFICATE
+    ══════════════════════════════════════ */
+    .cert-layout { display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: center; }
+    .cert-card {
+      background: var(--card); border: 1px solid var(--border);
+      padding: 48px; position: relative; overflow: hidden;
+    }
+    .cert-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      animation: cert-line 3s ease-in-out infinite;
+    }
+    @keyframes cert-line {
+      0%, 100% { opacity: .4; background-position: 0% 50%; }
+      50%       { opacity: 1; }
+    }
+    /* Scanning light */
+    .cert-card::after {
+      content: ''; position: absolute; top: 0; left: -100%; width: 40%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,.04), transparent);
+      animation: cert-scan 4s ease-in-out infinite;
+    }
+    @keyframes cert-scan { to { left: 200%; } }
+    .cert-title { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; margin-bottom: 32px; color: var(--gold2); }
+    .cert-rows { display: flex; flex-direction: column; }
+    .cert-row {
+      display: flex; justify-content: space-between; padding: 13px 0;
+      border-bottom: 1px solid var(--border); font-size: .68rem;
+      transition: background .2s;
+    }
+    .cert-row:hover { background: rgba(201,168,76,.03); }
+    .cert-row:last-child { border-bottom: none; }
+    .cert-row .label { color: var(--muted); letter-spacing: .06em; }
+    .cert-row .value { color: var(--white); font-weight: 500; }
+    .cert-row .value.gold { color: var(--gold); }
+    .cert-logos { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
+    .cert-logo {
+      padding: 9px 16px; border: 1px solid var(--border);
+      font-size: .6rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted);
+      transition: border-color .3s, color .3s;
+    }
+    .cert-logo:hover { border-color: var(--gold); color: var(--gold2); }
+
+    /* ══════════════════════════════════════
+       STATS
+    ══════════════════════════════════════ */
+    .stats-bar {
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      padding: 64px; display: flex; justify-content: space-around; flex-wrap: wrap; gap: 40px;
+      background: var(--deep);
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.2rem; font-weight: 300;
+      color: var(--gold2);
+    }
+    .stat-label { font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-top: 8px; }
+
+    /* ══════════════════════════════════════
+       CONTACT
+    ══════════════════════════════════════ */
+    .contact-section { text-align: center; }
+    .contact-grid {
+      display: flex; justify-content: center; gap: 2px; flex-wrap: wrap;
+      max-width: 800px; margin: 52px auto 56px;
+    }
+    .contact-item {
+      background: var(--card); border: 1px solid var(--border);
+      padding: 36px 44px; flex: 1; min-width: 200px;
+      transition: border-color .4s, transform .4s;
+    }
+    .contact-item:hover { border-color: rgba(201,168,76,.5); transform: translateY(-4px); }
+    .contact-item .icon { font-size: 1.5rem; margin-bottom: 14px; animation: icon-bounce 3s ease-in-out infinite; animation-play-state: paused; }
+    .contact-item:nth-child(2) .icon { animation-delay: -1s; }
+    .contact-item:nth-child(3) .icon { animation-delay: -2s; }
+    .contact-item strong { display: block; font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+    .contact-item span { font-size: .76rem; color: var(--white); }
+
+    /* ══════════════════════════════════════
+       DIVIDER
+    ══════════════════════════════════════ */
+    .divider {
+      display: flex; align-items: center; gap: 20px;
+      margin: 0 64px; opacity: .3;
+    }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--gold); }
+    .divider span { font-size: .55rem; color: var(--gold); letter-spacing: .3em; }
+
+    /* ══════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════ */
+    footer {
+      border-top: 1px solid var(--border); padding: 40px 64px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 20px; position: relative; z-index: 10;
+      background: rgba(8,8,16,.8);
+    }
+    footer p { font-size: .62rem; color: var(--muted); letter-spacing: .07em; }
+
+    /* ══════════════════════════════════════
+       HAMBURGER MENU
+    ══════════════════════════════════════ */
+    .hamburger {
+      display: none; flex-direction: column; justify-content: center;
+      gap: 5px; width: 32px; height: 32px; cursor: pointer;
+      background: none; border: none; padding: 4px; z-index: 300;
+    }
+    .hamburger span {
+      display: block; height: 1px; background: var(--gold2);
+      transition: transform .35s ease, opacity .35s ease, width .35s ease;
+      transform-origin: center;
+    }
+    .hamburger span:nth-child(1) { width: 24px; }
+    .hamburger span:nth-child(2) { width: 18px; }
+    .hamburger span:nth-child(3) { width: 24px; }
+    .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); width: 24px; }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); width: 24px; }
+
+    .mobile-menu {
+      display: none;
+      position: fixed; inset: 0; z-index: 250;
+      background: rgba(8,8,16,.97);
+      backdrop-filter: blur(20px);
+      flex-direction: column; align-items: center; justify-content: center;
+      gap: 0;
+      opacity: 0; pointer-events: none;
+      transition: opacity .4s ease;
+    }
+    .mobile-menu.open { opacity: 1; pointer-events: all; }
+    .mobile-menu a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem; font-weight: 300; letter-spacing: .12em;
+      color: var(--muted); text-decoration: none;
+      padding: 18px 0; border-bottom: 1px solid var(--border);
+      width: 70%; text-align: center;
+      transition: color .3s;
+      transform: translateY(20px); opacity: 0;
+      transition: color .3s, transform .4s ease, opacity .4s ease;
+    }
+    .mobile-menu.open a { transform: translateY(0); opacity: 1; }
+    .mobile-menu.open a:nth-child(1) { transition-delay: .05s; }
+    .mobile-menu.open a:nth-child(2) { transition-delay: .10s; }
+    .mobile-menu.open a:nth-child(3) { transition-delay: .15s; }
+    .mobile-menu.open a:nth-child(4) { transition-delay: .20s; }
+    .mobile-menu.open a:nth-child(5) { transition-delay: .25s; }
+    .mobile-menu a:hover { color: var(--gold2); }
+    .mobile-menu a:last-child { border-bottom: none; }
+
+    /* ══════════════════════════════════════
+       MOBILE
+    ══════════════════════════════════════ */
+    @media (max-width: 800px) {
+      /* Nav */
+      nav { padding: 20px 24px; }
+      nav.scrolled { padding: 14px 24px; }
+      nav ul { display: none; }
+      .hamburger { display: flex; }
+
+      /* Hero — mobilon csak szöveg, semmi nehéz animáció */
+      .hero { padding: 100px 28px 140px; min-height: 100svh; }
+      .hero-diamond-wrap { display: none; }
+      .orbit { display: none; }
+      .aurora { display: none; }
+      #particles { display: none; }
+      .hero-diamond-wrap {
+        width: 240px; height: 240px;
+        transform: translate(-50%, -58%);
+        opacity: .5;
+      }
+      .orbit {
+        width: 240px; height: 240px;
+        transform: translate(-50%, -58%);
+      }
+      .orbit-ring-1 { inset: -40px; }
+      .orbit-ring-2 { inset: -70px; }
+      .orbit-ring-3 { inset: -100px; }
+      .hero-eyebrow { font-size: .6rem; gap: 10px; }
+      .hero h1 { font-size: clamp(2.4rem, 10vw, 3.2rem); margin-bottom: 20px; }
+      .hero-sub { font-size: .72rem; margin-bottom: 36px; }
+      .hero-sub br { display: none; }
+      .scroll-hint { bottom: 28px; }
+
+      /* Trust bar */
+      .trust-bar {
+        padding: 28px 20px; gap: 20px;
+        display: grid; grid-template-columns: 1fr 1fr;
+      }
+      .trust-item { gap: 12px; }
+      .trust-icon { font-size: 1.2rem; }
+      .trust-text strong { font-size: .62rem; }
+      .trust-text span { font-size: .58rem; }
+
+      /* Sections */
+      section { padding: 72px 24px; }
+
+      /* Rings */
+      .rings-header { margin-bottom: 36px; flex-direction: column; gap: 12px; }
+      .rings-header p { max-width: 100% !important; }
+      .rings-grid { grid-template-columns: 1fr; }
+      .ring-img { height: 260px; }
+      .ring-emoji { font-size: 4.5rem; }
+      .ring-info { padding: 24px; }
+      .ring-name { font-size: 1.3rem; }
+      .ring-price { font-size: 1.6rem; }
+
+      /* Custom */
+      #custom { padding: 72px 24px !important; }
+      .custom-layout { grid-template-columns: 1fr; gap: 40px; }
+      .custom-visual { display: none; }
+
+      /* Stones */
+      .stones-grid { grid-template-columns: 1fr; margin-top: 40px; }
+      .stone-cell { padding: 36px 24px; }
+
+      /* Stats */
+      .stats-bar {
+        padding: 40px 24px; gap: 24px;
+        display: grid; grid-template-columns: 1fr 1fr;
+      }
+      .stat-num { font-size: 2.4rem; }
+      .stat-label { font-size: .58rem; }
+
+      /* Certificate */
+      .cert-layout { grid-template-columns: 1fr; gap: 40px; }
+      .cert-card { padding: 28px 20px; }
+      .cert-row { font-size: .62rem; flex-direction: column; gap: 2px; padding: 10px 0; }
+      .cert-row .value { color: var(--white); }
+
+      /* Contact */
+      .contact-section { padding: 72px 24px !important; }
+      .contact-grid { flex-direction: column; gap: 2px; margin: 36px auto 40px; }
+      .contact-item { padding: 24px; min-width: unset; }
+
+      /* Divider */
+      .divider { margin: 0 24px; }
+
+      /* Footer */
+      footer { padding: 28px 24px; flex-direction: column; align-items: flex-start; gap: 8px; }
+    }
+
+    @media (max-width: 400px) {
+      .hero h1 { font-size: 2.2rem; }
+      .trust-bar { grid-template-columns: 1fr; }
+      .stats-bar { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- PARTICLE CANVAS -->
+<canvas id="particles"></canvas>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="logo"><span>ESO</span>MI</div>
+  <ul>
+    <li><a href="#rings">Gyűrűk</a></li>
+    <li><a href="#custom">Egyedi tervezés</a></li>
+    <li><a href="#stones">Nyers kövek</a></li>
+    <li><a href="#certificate">Tanúsítványok</a></li>
+    <li><a href="#contact">Kapcsolat</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menü">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#rings">Gyűrűk</a>
+  <a href="#custom">Egyedi tervezés</a>
+  <a href="#stones">Nyers kövek</a>
+  <a href="#certificate">Tanúsítványok</a>
+  <a href="#contact">Kapcsolat</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="aurora"></div>
+
+  <!-- Floating diamond -->
+  <div class="hero-diamond-wrap">
+    <svg class="hero-diamond" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="dg1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"   stop-color="#f0dea3" stop-opacity=".9"/>
+          <stop offset="40%"  stop-color="#c9a84c" stop-opacity=".7"/>
+          <stop offset="100%" stop-color="#7a6030" stop-opacity=".5"/>
+        </linearGradient>
+        <linearGradient id="dg2" x1="100%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%"   stop-color="#ffffff" stop-opacity=".15"/>
+          <stop offset="100%" stop-color="#c9a84c" stop-opacity=".05"/>
+        </linearGradient>
+      </defs>
+      <!-- Main diamond shape -->
+      <polygon points="100,10 180,80 100,190 20,80" fill="url(#dg1)" opacity=".85"/>
+      <!-- Facets -->
+      <polygon points="100,10 140,60 100,80 60,60"  fill="url(#dg2)" opacity=".8"/>
+      <polygon points="60,60 100,80 20,80"           fill="rgba(201,168,76,.12)"/>
+      <polygon points="140,60 180,80 100,80"         fill="rgba(255,255,255,.1)"/>
+      <polygon points="100,80 60,60 100,190"         fill="rgba(0,0,0,.15)"/>
+      <polygon points="100,80 140,60 100,190"        fill="rgba(201,168,76,.08)"/>
+      <!-- Highlight -->
+      <polygon points="100,10 130,50 100,42 70,50"  fill="rgba(255,255,255,.35)"/>
+      <!-- Outline -->
+      <polygon points="100,10 180,80 100,190 20,80" fill="none" stroke="rgba(201,168,76,.4)" stroke-width=".8"/>
+    </svg>
+  </div>
+
+  <!-- Orbiting sparkles -->
+  <div class="orbit">
+    <div class="orbit-ring orbit-ring-1">
+      <div class="sparkle">
+        <svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 0L7 5L12 6L7 7L6 12L5 7L0 6L5 5Z" fill="#c9a84c" opacity=".8"/></svg>
+      </div>
+    </div>
+    <div class="orbit-ring orbit-ring-2">
+      <div class="sparkle">
+        <svg width="8" height="8" viewBox="0 0 8 8"><path d="M4 0L5 3L8 4L5 5L4 8L3 5L0 4L3 3Z" fill="#e8d5a3" opacity=".6"/></svg>
+      </div>
+    </div>
+    <div class="orbit-ring orbit-ring-3">
+      <div class="sparkle">
+        <svg width="6" height="6" viewBox="0 0 6 6"><path d="M3 0L3.5 2.5L6 3L3.5 3.5L3 6L2.5 3.5L0 3L2.5 2.5Z" fill="#c9a84c" opacity=".5"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow">Certified Diamond Jewellery</p>
+    <h1>Minden gyémánt<br><em>egy életre szól.</em></h1>
+    <p class="hero-sub">Hitelesített gyémántok, saját tervezésű gyűrűk és nyers drágakövek —<br>minden darab útlevéllel és hivatalos tanúsítvánnyal.</p>
+    <a href="#rings" class="btn-primary">Kollekció megtekintése</a>
+  </div>
+
+  <div class="scroll-hint">SCROLL<div class="scroll-line"></div></div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-item reveal"><div class="trust-icon">💎</div><div class="trust-text"><strong>GIA / IGI Tanúsítvány</strong><span>Minden gyémánt hitelesített</span></div></div>
+  <div class="trust-item reveal"><div class="trust-icon">📋</div><div class="trust-text"><strong>Teljes dokumentáció</strong><span>Útlevél, eredeti papírok</span></div></div>
+  <div class="trust-item reveal"><div class="trust-icon">✦</div><div class="trust-text"><strong>Egyedi tervezés</strong><span>Személyre szabott gyűrűk</span></div></div>
+  <div class="trust-item reveal"><div class="trust-icon">🔐</div><div class="trust-text"><strong>Kimberley Process</strong><span>Konfliktus-mentes származás</span></div></div>
+</div>
+
+<!-- RINGS -->
+<section id="rings" class="rings-section">
+  <div class="rings-header reveal">
+    <div>
+      <p class="section-label">Elérhető kollekció</p>
+      <h2 class="section-title">Kész <em>gyűrűink</em></h2>
+    </div>
+    <p style="font-size:.7rem;color:var(--muted);max-width:280px;line-height:2;">Két exkluzív darab azonnali átvétellel — mindkettő teljes dokumentációval.</p>
+  </div>
+  <div class="rings-grid">
+    <div class="ring-card reveal">
+      <div class="ring-img">
+        <div class="ring-emoji">💍</div>
+        <div class="ring-badge">Elérhető</div>
+      </div>
+      <div class="ring-info">
+        <h3 class="ring-name">Solitaire No. 1</h3>
+        <p class="ring-spec">18K Fehér arany · 1.2ct Brilliáns csiszolású</p>
+        <p class="ring-price">7 800 000 Ft</p>
+        <ul class="ring-features">
+          <li>GIA tanúsítvány — D/VS1</li>
+          <li>4C minősítés + lézergravírozott azonosító</li>
+          <li>Kimberley Process — konfliktus-mentes</li>
+          <li>Eredeti minősítési dokumentáció mellékelve</li>
+        </ul>
+        <button class="btn-ring">Részletek & Időpontfoglalás</button>
+      </div>
+    </div>
+    <div class="ring-card reveal">
+      <div class="ring-img" style="background:radial-gradient(ellipse at 50% 50%, #22182a 0%, #0e0c16 100%)">
+        <div class="ring-emoji">💍</div>
+        <div class="ring-badge">Elérhető</div>
+      </div>
+      <div class="ring-info">
+        <h3 class="ring-name">Pavé Eternity No. 2</h3>
+        <p class="ring-spec">18K Rozé arany · 0.85ct Emerald csiszolású</p>
+        <p class="ring-price">6 200 000 Ft</p>
+        <ul class="ring-features">
+          <li>IGI tanúsítvány — E/VVS2</li>
+          <li>4C minősítés + lézergravírozott azonosító</li>
+          <li>Kimberley Process — konfliktus-mentes</li>
+          <li>Eredeti minősítési dokumentáció mellékelve</li>
+        </ul>
+        <button class="btn-ring">Részletek & Időpontfoglalás</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><span>◆</span></div>
+
+<!-- CUSTOM -->
+<section id="custom" style="padding:120px 64px;">
+  <div class="custom-layout">
+    <div>
+      <p class="section-label reveal">Személyre szabott</p>
+      <h2 class="section-title reveal">Terveztesd meg<br><em>saját gyűrűdet</em></h2>
+      <p class="section-body reveal">Segítünk kiválasztani a tökéletes követ, megtervezzük a foglalatot, és elkészítjük az egyedi darabot — teljes dokumentációval.</p>
+      <ol class="steps">
+        <li class="step reveal"><span class="step-num">01</span><div class="step-text"><strong>Konzultáció</strong><span>Személyes találkozón megismerjük az elképzeléseit.</span></div></li>
+        <li class="step reveal"><span class="step-num">02</span><div class="step-text"><strong>Kőválasztás</strong><span>Hitelesített gyémántok közül választjuk ki a legmegfelelőbbet.</span></div></li>
+        <li class="step reveal"><span class="step-num">03</span><div class="step-text"><strong>Tervezés & Gyártás</strong><span>3D terv jóváhagyás után kézzel készül el az Ön darabja.</span></div></li>
+        <li class="step reveal"><span class="step-num">04</span><div class="step-text"><strong>Átvétel & Dokumentáció</strong><span>Teljes tanúsítvánnyal, útlevéllel és garanciával.</span></div></li>
+      </ol>
+    </div>
+    <div class="custom-visual reveal">
+      <div class="hex-ring hex-ring-1"><div class="hex-dot"></div></div>
+      <div class="hex-ring hex-ring-2"><div class="hex-dot"></div></div>
+      <div class="hex-ring hex-ring-3"><div class="hex-dot"></div></div>
+      <div class="center-gem">💎</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><span>◆</span></div>
+
+<!-- STONES -->
+<section id="stones" class="stones-section">
+  <p class="section-label reveal">Forrás</p>
+  <h2 class="section-title reveal">Nyers <em>drágakövek</em></h2>
+  <p class="section-body reveal">Befektetési célú és ékszernek szánt nyers gyémántok — minden kő útlevelezett és nyomkövetett.</p>
+  <div class="stones-grid">
+    <div class="stone-cell reveal"><span class="stone-icon">🔷</span><h3 class="stone-name">Nyers gyémánt</h3><p class="stone-desc">Bányából közvetlenül, csiszolatlan formában. Befektetési és egyedi ékszer alapanyagnak. GIA/IGI minősítéssel.</p></div>
+    <div class="stone-cell reveal"><span class="stone-icon">💎</span><h3 class="stone-name">Csiszolt brilliáns</h3><p class="stone-desc">Mestercsiszolástól foglalatba helyezésig — teljes minősítési dokumentációval és egyedi azonosítóval.</p></div>
+    <div class="stone-cell reveal"><span class="stone-icon">✦</span><h3 class="stone-name">Különleges csiszolatok</h3><p class="stone-desc">Emerald, Princess, Pear, Oval és Marquise csiszolású gyémántok. Egyedi darabok, mindegyik más.</p></div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item reveal"><div class="stat-num" data-target="100">0</div><div class="stat-label">% Hitelesített kő</div></div>
+  <div class="stat-item reveal"><div class="stat-num" data-target="3">0</div><div class="stat-label">Akkreditált intézet</div></div>
+  <div class="stat-item reveal"><div class="stat-num" data-target="2">0</div><div class="stat-label">Kész gyűrű raktáron</div></div>
+  <div class="stat-item reveal"><div class="stat-num" data-target="0">0</div><div class="stat-label">Konfliktus-kő</div></div>
+</div>
+
+<!-- CERTIFICATE -->
+<section id="certificate">
+  <div class="cert-layout">
+    <div class="cert-card reveal">
+      <p class="cert-title">◆ Minta tanúsítvány kivonat</p>
+      <div class="cert-rows">
+        <div class="cert-row"><span class="label">Azonosítószám</span><span class="value gold">GIA-6471893204</span></div>
+        <div class="cert-row"><span class="label">Csiszolás</span><span class="value">Brilliáns (Round)</span></div>
+        <div class="cert-row"><span class="label">Tömeg</span><span class="value">1.20 ct</span></div>
+        <div class="cert-row"><span class="label">Szín</span><span class="value gold">D (Colorless)</span></div>
+        <div class="cert-row"><span class="label">Tisztaság</span><span class="value gold">VS1</span></div>
+        <div class="cert-row"><span class="label">Csiszolás minősége</span><span class="value">Excellent</span></div>
+        <div class="cert-row"><span class="label">Fluoreszcencia</span><span class="value">None</span></div>
+        <div class="cert-row"><span class="label">Konfliktus-mentes</span><span class="value gold">Kimberley Process Cert.</span></div>
+      </div>
+      <div class="cert-logos">
+        <div class="cert-logo">GIA</div>
+        <div class="cert-logo">IGI</div>
+        <div class="cert-logo">HRD Antwerp</div>
+      </div>
+    </div>
+    <div>
+      <p class="section-label reveal">Hitelesség</p>
+      <h2 class="section-title reveal">Minden gyémántnak<br><em>van útlevele.</em></h2>
+      <p class="section-body reveal">A GIA, IGI és HRD által kiadott tanúsítványok garantálják minden kő eredetiségét, minőségét és konfliktus-mentes származását.</p>
+      <p class="section-body reveal" style="margin-top:20px;">Ez nem csupán papír — ez a gyémánt személyazonossága. Értékét generációkon át megőrzi.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section" style="background:var(--deep);">
+  <p class="section-label reveal">Személyes találkozó</p>
+  <h2 class="section-title reveal">Kezdjük el<br><em>a beszélgetést.</em></h2>
+  <p class="section-body reveal" style="margin:0 auto;">Exkluzív klienseinknek személyes konzultációt kínálunk. Egy gyűrű ilyen értékrenden nem webshopból való.</p>
+  <div class="contact-grid">
+    <div class="contact-item reveal"><div class="icon">📞</div><strong>Telefon</strong><span>+36 XX XXX XXXX</span></div>
+    <div class="contact-item reveal"><div class="icon">✉️</div><strong>Email</strong><span>info@esomi.hu</span></div>
+    <div class="contact-item reveal"><div class="icon">📍</div><strong>Helyszín</strong><span>Budapest — egyeztetett időpont</span></div>
+  </div>
+  <a href="mailto:info@esomi.hu" class="btn-primary reveal">Időpontot kérek</a>
+</section>
+
+<footer>
+  <div class="logo"><span>ESO</span>MI</div>
+  <p>© 2025 ESOMI — Certified Diamond Jewellery</p>
+  <p style="color:#2a2830;">Prototípus · Teszt verzió</p>
+</footer>
+
+<script>
+
+/* ══ PARTICLES ══ */
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let W, H, particles = [];
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', () => { resize(); init(); });
+
+function Particle() {
+  this.x = Math.random() * W;
+  this.y = Math.random() * H;
+  this.size = Math.random() * 1.5 + .3;
+  this.speedX = (Math.random() - .5) * .25;
+  this.speedY = (Math.random() - .5) * .25;
+  this.opacity = Math.random() * .5 + .1;
+  this.pulse = Math.random() * Math.PI * 2;
+  this.pulseSpeed = Math.random() * .01 + .005;
+  // some are diamond shapes
+  this.isDiamond = Math.random() < .15;
+}
+
+const isMobile = window.innerWidth < 800;
+
+function init() {
+  particles = [];
+  if (isMobile) return;
+  const count = Math.floor((W * H) / 10000);
+  for (let i = 0; i < Math.min(count, 80); i++) particles.push(new Particle());
+}
+init();
+
+let animationStarted = false;
+if (!isMobile) setTimeout(() => { animationStarted = true; animate(); }, 600);
+
+function drawDiamond(x, y, size, opacity) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(Math.PI / 4);
+  ctx.fillStyle = `rgba(201,168,76,${opacity})`;
+  ctx.fillRect(-size, -size, size * 2, size * 2);
+  ctx.restore();
+}
+
+function animate() {
+  if (!animationStarted) return;
+  ctx.clearRect(0, 0, W, H);
+  particles.forEach(p => {
+    p.x += p.speedX;
+    p.y += p.speedY;
+    p.pulse += p.pulseSpeed;
+    if (p.x < -10) p.x = W + 10;
+    if (p.x > W + 10) p.x = -10;
+    if (p.y < -10) p.y = H + 10;
+    if (p.y > H + 10) p.y = -10;
+    const op = p.opacity * (.5 + .5 * Math.sin(p.pulse));
+    if (p.isDiamond) {
+      drawDiamond(p.x, p.y, p.size * 2, op * .6);
+    } else {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(201,168,76,${op})`;
+      ctx.fill();
+    }
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+
+/* ══ SMOOTH SCROLL — hash nélkül ══ */
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+/* ══ ANIMÁCIÓK CSAK LÁTHATÓ ELEMEN ══ */
+const animObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.animationPlayState = 'running';
+      animObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.2 });
+document.querySelectorAll('.ring-emoji, .ring-badge, .stone-icon, .center-gem, .trust-icon, .contact-item .icon').forEach(el => animObs.observe(el));
+
+/* ══ NAV SCROLL ══ */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+/* ══ REVEAL ON SCROLL ══ */
+const reveals = document.querySelectorAll('.reveal');
+const revObs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+      revObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => revObs.observe(el));
+
+/* ══ COUNTER ANIMATION ══ */
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target);
+  const duration = 1800;
+  const start = performance.now();
+  function update(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.round(eased * target);
+    if (progress < 1) requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+const statObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      animateCounter(e.target);
+      statObs.unobserve(e.target);
+    }
+  });
+}, { threshold: .5 });
+document.querySelectorAll('.stat-num[data-target]').forEach(el => statObs.observe(el));
+
+/* ══ HAMBURGER ══ */
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+mobileMenu.style.display = 'flex';
+
+hamburger.addEventListener('click', () => {
+  const isOpen = mobileMenu.classList.toggle('open');
+  hamburger.classList.toggle('open');
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+});
+
+function closeMenu() {
+  mobileMenu.classList.remove('open');
+  hamburger.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Mobile menu linkek is hash nélkül görgetnek
+document.querySelectorAll('.mobile-menu a').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    closeMenu();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) setTimeout(() => target.scrollIntoView({ behavior: 'smooth' }), 300);
+  });
+});
+
+/* ══ CURSOR SPARKLE ══ */
+document.addEventListener('mousemove', (e) => {
+  if (Math.random() > .85) {
+    const spark = document.createElement('div');
+    spark.style.cssText = `
+      position:fixed;left:${e.clientX}px;top:${e.clientY}px;
+      width:4px;height:4px;pointer-events:none;z-index:9999;
+      background:rgba(201,168,76,.8);border-radius:50%;
+      transform:translate(-50%,-50%);
+      animation:spark-fade .6s ease forwards;
+    `;
+    document.body.appendChild(spark);
+    setTimeout(() => spark.remove(), 600);
+  }
+});
+const sparkStyle = document.createElement('style');
+sparkStyle.textContent = `@keyframes spark-fade {
+  0%   { transform:translate(-50%,-50%) scale(1); opacity:.8; }
+  100% { transform:translate(-50%,-50%) scale(3) translateY(-20px); opacity:0; }
+}`;
+document.head.appendChild(sparkStyle);
+</script>
+</body>
+</html>
