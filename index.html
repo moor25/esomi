@@ -61,15 +61,37 @@
       position: fixed; top: 0; left: 0; right: 0; z-index: 200;
       display: flex; align-items: center; justify-content: space-between;
       padding: 28px 64px;
-      transition: background .5s, padding .5s;
+      transition: background .5s, backdrop-filter .5s, padding .5s, box-shadow .5s;
     }
-    nav.scrolled { background: rgba(8,8,16,.92); backdrop-filter: blur(16px); padding: 18px 64px; }
+    nav.scrolled {
+      background: linear-gradient(180deg, rgba(5,5,12,.97) 0%, rgba(8,8,18,.93) 100%);
+      backdrop-filter: blur(22px) saturate(1.6);
+      padding: 16px 64px;
+      box-shadow: 0 1px 0 rgba(201,168,76,.18), 0 8px 32px rgba(0,0,0,.45);
+    }
+    /* arany hairline + halvány glint a tetején */
+    nav.scrolled::after {
+      content: '';
+      position: absolute; bottom: 0; left: 10%; right: 10%; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,.45) 30%, rgba(232,213,163,.6) 50%, rgba(201,168,76,.45) 70%, transparent);
+      pointer-events: none;
+    }
     .logo {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.7rem; font-weight: 300; letter-spacing: .28em;
+      font-size: 1.7rem; font-weight: 300; letter-spacing: .3em;
       color: var(--gold2); position: relative; z-index: 1;
+      background: none; border: none; cursor: pointer; padding: 0;
+      display: flex; align-items: center; gap: 10px;
+      transition: opacity .2s;
     }
+    .logo:hover { opacity: .8; }
     .logo span { color: var(--gold); font-weight: 600; }
+    /* kis ◆ ornament a logo előtt */
+    .logo::before {
+      content: '◆';
+      font-size: .45rem; color: var(--gold); opacity: .7;
+      letter-spacing: 0; position: relative; top: -1px;
+    }
     nav ul { list-style: none; display: flex; gap: 44px; }
     nav ul a {
       font-size: .68rem; letter-spacing: .16em; text-transform: uppercase;
@@ -792,7 +814,7 @@
 
 <!-- NAV -->
 <nav id="nav">
-  <div class="logo"><span>ESO</span>MI</div>
+  <button class="logo" id="logo-home"><span>ESO</span>MI</button>
   <ul>
     <li><a href="#rings">Gyűrűk</a></li>
     <li><a href="#custom">Egyedi tervezés</a></li>
@@ -1267,6 +1289,11 @@ sparkStyle.textContent = `@keyframes spark-fade {
   100% { transform:translate(-50%,-50%) scale(3) translateY(-20px); opacity:0; }
 }`;
 document.head.appendChild(sparkStyle);
+
+// ── Logo → top ──
+document.getElementById('logo-home').addEventListener('click', () =>
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+);
 
 // ── Carousel ──
 (function() {
