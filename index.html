@@ -322,8 +322,8 @@
     /* ══════════════════════════════════════
        RINGS
     ══════════════════════════════════════ */
-    .rings-section { background: var(--deep); }
-    .rings-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 64px; flex-wrap: wrap; gap: 24px; }
+    .rings-section { background: var(--deep); padding: 80px 64px; }
+    .rings-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 44px; flex-wrap: wrap; gap: 24px; }
     .rings-carousel { position: relative; }
     .rings-track-clip { overflow: hidden; position: relative; }
     .rings-track {
@@ -334,7 +334,7 @@
     .rings-track .ring-card { flex: 0 0 100%; min-width: 0; }
     /* Nyilak a kép bal/jobb szélén lebegnek */
     .carousel-btn {
-      position: absolute; top: 190px; transform: translateY(-50%);
+      position: absolute; top: 150px; transform: translateY(-50%);
       z-index: 20; width: 44px; height: 44px; border-radius: 50%;
       background: rgba(6,6,14,.75); backdrop-filter: blur(8px);
       border: 1px solid rgba(201,168,76,.3);
@@ -384,7 +384,7 @@
       background: linear-gradient(145deg, rgba(201,168,76,.6) 0%, rgba(232,213,163,.3) 50%, rgba(201,168,76,.1) 100%);
     }
     .ring-img {
-      height: 380px; overflow: hidden; position: relative;
+      height: 300px; overflow: hidden; position: relative;
       background:
         radial-gradient(ellipse 60% 60% at 50% 50%, #201c2e 0%, #0a0912 100%);
       display: flex; align-items: center; justify-content: center;
@@ -437,14 +437,14 @@
       color: rgba(201,168,76,.6); background: rgba(0,0,0,.3);
       backdrop-filter: blur(4px);
     }
-    .ring-info { padding: 36px; }
-    .ring-name { font-family: 'Cormorant Garamond', serif; font-size: 1.55rem; font-weight: 400; margin-bottom: 8px; }
-    .ring-spec { font-size: .65rem; color: var(--muted); letter-spacing: .1em; margin-bottom: 20px; }
+    .ring-info { padding: 26px 32px; }
+    .ring-name { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; font-weight: 400; margin-bottom: 6px; }
+    .ring-spec { font-size: .65rem; color: var(--muted); letter-spacing: .1em; margin-bottom: 14px; }
     .ring-price {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.9rem; color: var(--gold2); font-weight: 300; margin-bottom: 20px;
+      font-size: 1.75rem; color: var(--gold2); font-weight: 300; margin-bottom: 14px;
     }
-    .ring-features { list-style: none; display: flex; flex-direction: column; gap: 9px; margin-bottom: 28px; }
+    .ring-features { list-style: none; display: flex; flex-direction: column; gap: 7px; margin-bottom: 20px; }
     .ring-features li { font-size: .66rem; color: var(--muted); display: flex; align-items: center; gap: 10px; }
     .ring-features li::before { content: '◆'; font-size: .4rem; color: var(--gold); }
     .btn-ring {
