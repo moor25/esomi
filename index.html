@@ -256,6 +256,23 @@
       background: linear-gradient(to bottom, var(--gold), transparent);
       animation: scroll-draw 1.8s ease-in-out infinite;
     }
+    .scroll-icon { color: var(--muted); }
+    .scroll-mouse { width: 13px; height: 20px; }
+    .scroll-touch { width: 13px; height: 20px; display: none; }
+    @media (pointer: coarse) {
+      .scroll-mouse { display: none; }
+      .scroll-touch { display: block; }
+    }
+    @keyframes wheel-move {
+      0%, 100% { transform: translateY(0); opacity: .75; }
+      50%       { transform: translateY(3px); opacity: .3; }
+    }
+    .mouse-wheel { animation: wheel-move 1.6s ease-in-out infinite; transform-box: fill-box; transform-origin: top center; }
+    @keyframes touch-swipe {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(3px); opacity: .5; }
+    }
+    .scroll-touch { animation: touch-swipe 1.6s ease-in-out infinite; }
     @keyframes scroll-draw {
       0%        { transform: scaleY(0) translateY(0); transform-origin: top; opacity: 1; }
       50%       { transform: scaleY(1) translateY(0); transform-origin: top; opacity: 1; }
@@ -982,7 +999,18 @@
     <a href="#rings" class="btn-primary">Kollekció megtekintése</a>
   </div>
 
-  <div class="scroll-hint"><div class="scroll-line"></div>∨</div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <svg class="scroll-icon scroll-mouse" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="1" y="1" width="10" height="18" rx="5" stroke="currentColor" stroke-width="1"/>
+      <line x1="6" y1="5" x2="6" y2="8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" class="mouse-wheel"/>
+    </svg>
+    <svg class="scroll-icon scroll-touch" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="6" cy="5" rx="3.5" ry="4" stroke="currentColor" stroke-width="1"/>
+      <line x1="6" y1="9.5" x2="6" y2="15.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+      <polyline points="3,12.5 6,16.5 9,12.5" stroke="currentColor" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" fill="none"/>
+    </svg>
+  </div>
 </section>
 
 <!-- TRUST BAR -->
