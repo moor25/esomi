@@ -437,18 +437,7 @@
       color: rgba(201,168,76,.6); background: rgba(0,0,0,.3);
       backdrop-filter: blur(4px);
     }
-    .stone-swatches {
-      display: flex; justify-content: center; gap: 10px;
-      padding: 12px 0; border-top: 1px solid var(--border);
-    }
-    .stone-swatch {
-      width: 17px; height: 17px; border-radius: 50%;
-      cursor: pointer; border: 2px solid transparent; padding: 0;
-      transition: transform .2s, border-color .2s;
-    }
-    .stone-swatch:hover { transform: scale(1.2); }
-    .stone-swatch.active { border-color: rgba(201,168,76,.85); transform: scale(1.15); }
-    .ring-info { padding: 26px 32px; }
+.ring-info { padding: 26px 32px; }
     .ring-name { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; font-weight: 400; margin-bottom: 6px; }
     .ring-spec { font-size: .65rem; color: var(--muted); letter-spacing: .1em; margin-bottom: 14px; }
     .ring-price {
@@ -1033,19 +1022,12 @@
             <line x1="52" y1="73" x2="50" y2="60" stroke="#c9a84c" stroke-width="1.2" opacity=".52"/>
             <line x1="68" y1="73" x2="70" y2="60" stroke="#c9a84c" stroke-width="1.2" opacity=".52"/>
             <!-- Diamond -->
-            <polygon class="ring-stone-gem" points="60,13 77,37 60,54 43,37" stroke="#c9a84c" stroke-width="1.5" fill="rgba(225,242,255,.82)" opacity=".9"/>
+            <polygon points="60,13 77,37 60,54 43,37" stroke="#c9a84c" stroke-width="1.5" fill="rgba(201,168,76,.07)" opacity=".82"/>
             <line x1="49" y1="27" x2="71" y2="27" stroke="#c9a84c" stroke-width=".8" opacity=".42"/>
             <line x1="60" y1="13" x2="60" y2="54" stroke="#c9a84c" stroke-width=".5" opacity=".2"/>
             <line x1="43" y1="37" x2="77" y2="37" stroke="#c9a84c" stroke-width=".5" opacity=".2"/>
             <polygon points="60,13 68,24 60,28 52,24" fill="rgba(255,255,255,.16)"/>
           </svg>
-          <div class="stone-swatches">
-            <button class="stone-swatch active" title="Fehér Brilliáns" data-color="rgba(225,242,255,.82)" data-price="7 800 000 Ft" style="background:rgba(200,228,255,.8)"></button>
-            <button class="stone-swatch" title="Fancy Yellow" data-color="rgba(255,210,40,.80)" data-price="8 400 000 Ft" style="background:rgba(255,200,30,.85)"></button>
-            <button class="stone-swatch" title="Kék Zafír" data-color="rgba(40,80,210,.72)" data-price="6 200 000 Ft" style="background:rgba(55,100,220,.85)"></button>
-            <button class="stone-swatch" title="Smaragd" data-color="rgba(18,148,65,.72)" data-price="9 100 000 Ft" style="background:rgba(25,165,75,.85)"></button>
-            <button class="stone-swatch" title="Rubint" data-color="rgba(190,22,40,.78)" data-price="11 200 000 Ft" style="background:rgba(205,28,48,.85)"></button>
-          </div>
           <div class="ring-badge">Megtekinthető</div>
         </div>
         <div class="ring-info">
@@ -1070,19 +1052,12 @@
             <path d="M43 80 L43 102 Q43 118 60 118 Q77 118 77 102 L77 80" stroke="rgba(212,149,106,.28)" stroke-width="1" fill="none"/>
             <line x1="52" y1="73" x2="50" y2="60" stroke="#d4956a" stroke-width="1.2" opacity=".52"/>
             <line x1="68" y1="73" x2="70" y2="60" stroke="#d4956a" stroke-width="1.2" opacity=".52"/>
-            <polygon class="ring-stone-gem" points="60,13 77,37 60,54 43,37" stroke="#d4956a" stroke-width="1.5" fill="rgba(225,242,255,.82)" opacity=".9"/>
+            <polygon points="60,13 77,37 60,54 43,37" stroke="#d4956a" stroke-width="1.5" fill="rgba(212,149,106,.07)" opacity=".82"/>
             <line x1="49" y1="27" x2="71" y2="27" stroke="#d4956a" stroke-width=".8" opacity=".42"/>
             <line x1="60" y1="13" x2="60" y2="54" stroke="#d4956a" stroke-width=".5" opacity=".2"/>
             <line x1="43" y1="37" x2="77" y2="37" stroke="#d4956a" stroke-width=".5" opacity=".2"/>
             <polygon points="60,13 68,24 60,28 52,24" fill="rgba(255,220,190,.18)"/>
           </svg>
-          <div class="stone-swatches">
-            <button class="stone-swatch active" title="Fehér Brilliáns" data-color="rgba(225,242,255,.82)" data-price="6 200 000 Ft" style="background:rgba(200,228,255,.8)"></button>
-            <button class="stone-swatch" title="Fancy Yellow" data-color="rgba(255,210,40,.80)" data-price="7 100 000 Ft" style="background:rgba(255,200,30,.85)"></button>
-            <button class="stone-swatch" title="Kék Zafír" data-color="rgba(40,80,210,.72)" data-price="5 400 000 Ft" style="background:rgba(55,100,220,.85)"></button>
-            <button class="stone-swatch" title="Smaragd" data-color="rgba(18,148,65,.72)" data-price="7 800 000 Ft" style="background:rgba(25,165,75,.85)"></button>
-            <button class="stone-swatch" title="Rubint" data-color="rgba(190,22,40,.78)" data-price="9 600 000 Ft" style="background:rgba(205,28,48,.85)"></button>
-          </div>
           <div class="ring-badge">Megtekinthető</div>
         </div>
         <div class="ring-info">
@@ -1426,21 +1401,6 @@ sparkStyle.textContent = `@keyframes spark-fade {
   100% { transform:translate(-50%,-50%) scale(3) translateY(-20px); opacity:0; }
 }`;
 document.head.appendChild(sparkStyle);
-
-// ── Stone swatches ──
-document.querySelectorAll('.stone-swatches').forEach(group => {
-  const card    = group.closest('.ring-card');
-  const gem     = card.querySelector('.ring-stone-gem');
-  const priceEl = card.querySelector('.ring-price');
-  group.querySelectorAll('.stone-swatch').forEach(sw => {
-    sw.addEventListener('click', () => {
-      group.querySelectorAll('.stone-swatch').forEach(s => s.classList.remove('active'));
-      sw.classList.add('active');
-      if (gem)     gem.setAttribute('fill', sw.dataset.color);
-      if (priceEl) priceEl.textContent = sw.dataset.price;
-    });
-  });
-});
 
 // ── Logo → top ──
 document.getElementById('logo-home').addEventListener('click', () =>
