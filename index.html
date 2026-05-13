@@ -392,8 +392,8 @@
       mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 80%);
     }
     .ring-emoji {
-      font-size: 6.5rem;
-      filter: drop-shadow(0 0 30px rgba(201,168,76,.4));
+      width: 88px; height: 112px;
+      filter: drop-shadow(0 0 22px rgba(201,168,76,.38));
       transition: transform .6s ease, filter .6s ease;
       animation: ring-idle 4s ease-in-out infinite;
       animation-play-state: paused;
@@ -425,14 +425,10 @@
     }
     .ring-badge {
       position: absolute; top: 20px; right: 20px;
-      padding: 6px 14px; border: 1px solid var(--gold);
-      font-size: .58rem; letter-spacing: .15em; text-transform: uppercase; color: var(--gold);
-      animation: badge-glow 2.5s ease-in-out infinite;
-      animation-play-state: paused;
-    }
-    @keyframes badge-glow {
-      0%, 100% { box-shadow: 0 0 8px rgba(201,168,76,.2); }
-      50%       { box-shadow: 0 0 20px rgba(201,168,76,.5); }
+      padding: 5px 14px; border: 1px solid rgba(201,168,76,.22);
+      font-size: .52rem; letter-spacing: .22em; text-transform: uppercase;
+      color: rgba(201,168,76,.6); background: rgba(0,0,0,.3);
+      backdrop-filter: blur(4px);
     }
     .ring-info { padding: 36px; }
     .ring-name { font-family: 'Cormorant Garamond', serif; font-size: 1.55rem; font-weight: 400; margin-bottom: 8px; }
@@ -619,6 +615,46 @@
     .contact-item:nth-child(3) .icon { animation-delay: -2s; }
     .contact-item strong { display: block; font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
     .contact-item span { font-size: .76rem; color: var(--white); }
+
+    /* ══════════════════════════════════════
+       PHILOSOPHY
+    ══════════════════════════════════════ */
+    .philosophy-section { padding: 130px 64px; text-align: center; background: var(--bg); }
+    .philosophy-inner { max-width: 660px; margin: 0 auto; }
+    .philosophy-body { margin: 44px auto; max-width: 540px; }
+    .philosophy-body p {
+      font-size: .8rem; line-height: 2.3; color: var(--muted); margin-bottom: .8em;
+    }
+    .philosophy-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.45rem; font-weight: 300; font-style: italic;
+      color: var(--gold2); line-height: 1.75; border: none; margin: 0; padding: 0;
+    }
+    .philosophy-quote::before {
+      content: '◆  ◆  ◆';
+      display: block; font-size: .45rem; color: var(--gold);
+      letter-spacing: .55em; opacity: .55; margin-bottom: 36px;
+    }
+
+    /* ══════════════════════════════════════
+       EXPERIENCE STRIP
+    ══════════════════════════════════════ */
+    .experience-strip {
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      padding: 60px 64px; background: var(--deep);
+      display: flex; justify-content: center; align-items: center;
+      flex-wrap: wrap; gap: 0;
+    }
+    .exp-item {
+      flex: 1; min-width: 190px; max-width: 260px;
+      text-align: center; padding: 0 36px;
+    }
+    .exp-icon {
+      font-size: .42rem; color: var(--gold); letter-spacing: .55em;
+      opacity: .55; margin-bottom: 18px; display: block;
+    }
+    .exp-item p { font-size: .64rem; letter-spacing: .08em; color: var(--muted); line-height: 2; margin: 0; }
+    .exp-sep { font-size: .45rem; color: var(--gold); opacity: .22; align-self: center; padding: 0 4px; }
 
     /* ══════════════════════════════════════
        DIVIDER
@@ -950,6 +986,23 @@
   <div class="trust-item reveal"><div class="trust-icon">🔐</div><div class="trust-text"><strong>Kimberley Process</strong><span>Konfliktus-mentes származás</span></div></div>
 </div>
 
+<!-- PHILOSOPHY -->
+<section class="philosophy-section">
+  <div class="philosophy-inner">
+    <p class="section-label reveal">Mesterség</p>
+    <h2 class="section-title reveal">Nem forgalmazunk.<br><em>Alkotunk.</em></h2>
+    <div class="philosophy-body">
+      <p class="reveal">Az ESOMI egyetlen meggyőződéssel jött létre: minden gyémántnak van egy tökéletes gazdája — és a mi dolgunk, hogy megtalálják egymást.</p>
+      <p class="reveal">Nem kínálunk katalógust. Személyes konzultáción megismerjük az elképzelést, majd — és csak ezután — keressük meg a követ, amely hozzá méltó.</p>
+    </div>
+    <blockquote class="philosophy-quote reveal">
+      "Mások raktárból dolgoznak.<br>Mi az Ön elképzelésétől kezdünk."
+    </blockquote>
+  </div>
+</section>
+
+<div class="divider"><span>◆</span></div>
+
 <!-- RINGS -->
 <section id="rings" class="rings-section">
   <div class="rings-header reveal">
@@ -963,8 +1016,21 @@
     <div class="rings-track">
       <div class="ring-card reveal">
         <div class="ring-img">
-          <div class="ring-emoji">💍</div>
-          <div class="ring-badge">Elérhető</div>
+          <svg class="ring-emoji" viewBox="0 0 90 115" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 74 L20 91 Q20 109 45 109 Q70 109 70 91 L70 74" stroke="#c9a84c" stroke-width="1.2" opacity=".52"/>
+            <ellipse cx="45" cy="74" rx="25" ry="7" stroke="#c9a84c" stroke-width="1.2" opacity=".52"/>
+            <path d="M38 67 L36 53 M52 67 L54 53" stroke="#c9a84c" stroke-width="1" opacity=".48"/>
+            <line x1="36" y1="53" x2="33" y2="46" stroke="#c9a84c" stroke-width=".8" opacity=".42"/>
+            <line x1="54" y1="53" x2="57" y2="46" stroke="#c9a84c" stroke-width=".8" opacity=".42"/>
+            <polygon points="45,12 63,36 45,53 27,36" stroke="#c9a84c" stroke-width="1.2" fill="none" opacity=".78"/>
+            <line x1="35" y1="26" x2="55" y2="26" stroke="#c9a84c" stroke-width=".8" opacity=".42"/>
+            <line x1="45" y1="12" x2="45" y2="53" stroke="#c9a84c" stroke-width=".5" opacity=".2"/>
+            <line x1="27" y1="36" x2="63" y2="36" stroke="#c9a84c" stroke-width=".5" opacity=".2"/>
+            <line x1="35" y1="20" x2="55" y2="50" stroke="#c9a84c" stroke-width=".4" opacity=".16"/>
+            <line x1="55" y1="20" x2="35" y2="50" stroke="#c9a84c" stroke-width=".4" opacity=".16"/>
+            <polygon points="45,12 53,23 45,27 37,23" fill="rgba(255,255,255,.14)"/>
+          </svg>
+          <div class="ring-badge">Megtekinthető</div>
         </div>
         <div class="ring-info">
           <h3 class="ring-name">Solitaire No. 1</h3>
@@ -981,8 +1047,21 @@
       </div>
       <div class="ring-card reveal">
         <div class="ring-img" style="background:radial-gradient(ellipse at 50% 50%, #22182a 0%, #0e0c16 100%)">
-          <div class="ring-emoji">💍</div>
-          <div class="ring-badge">Elérhető</div>
+          <svg class="ring-emoji" viewBox="0 0 90 115" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 74 L20 91 Q20 109 45 109 Q70 109 70 91 L70 74" stroke="#d4956a" stroke-width="1.2" opacity=".52"/>
+            <ellipse cx="45" cy="74" rx="25" ry="7" stroke="#d4956a" stroke-width="1.2" opacity=".52"/>
+            <path d="M38 67 L36 53 M52 67 L54 53" stroke="#d4956a" stroke-width="1" opacity=".48"/>
+            <line x1="36" y1="53" x2="33" y2="46" stroke="#d4956a" stroke-width=".8" opacity=".42"/>
+            <line x1="54" y1="53" x2="57" y2="46" stroke="#d4956a" stroke-width=".8" opacity=".42"/>
+            <polygon points="45,12 63,36 45,53 27,36" stroke="#d4956a" stroke-width="1.2" fill="none" opacity=".78"/>
+            <line x1="35" y1="26" x2="55" y2="26" stroke="#d4956a" stroke-width=".8" opacity=".42"/>
+            <line x1="45" y1="12" x2="45" y2="53" stroke="#d4956a" stroke-width=".5" opacity=".2"/>
+            <line x1="27" y1="36" x2="63" y2="36" stroke="#d4956a" stroke-width=".5" opacity=".2"/>
+            <line x1="35" y1="20" x2="55" y2="50" stroke="#d4956a" stroke-width=".4" opacity=".16"/>
+            <line x1="55" y1="20" x2="35" y2="50" stroke="#d4956a" stroke-width=".4" opacity=".16"/>
+            <polygon points="45,12 53,23 45,27 37,23" fill="rgba(255,220,190,.12)"/>
+          </svg>
+          <div class="ring-badge">Megtekinthető</div>
         </div>
         <div class="ring-info">
           <h3 class="ring-name">Pavé Eternity No. 2</h3>
@@ -1040,11 +1119,11 @@
 <section id="stones" class="stones-section">
   <p class="section-label reveal">Forrás</p>
   <h2 class="section-title reveal">Nyers <em>drágakövek</em></h2>
-  <p class="section-body reveal">Befektetési célú és ékszernek szánt nyers gyémántok — minden kő útlevelezett és nyomkövetett.</p>
+  <p class="section-body reveal">Néhány kő soha nem kerül vissza a piacra. Ezek azok.</p>
   <div class="stones-grid">
-    <div class="stone-cell reveal"><span class="stone-icon">🔷</span><h3 class="stone-name">Nyers gyémánt</h3><p class="stone-desc">Bányából közvetlenül, csiszolatlan formában. Befektetési és egyedi ékszer alapanyagnak. GIA/IGI minősítéssel.</p></div>
-    <div class="stone-cell reveal"><span class="stone-icon">💎</span><h3 class="stone-name">Csiszolt brilliáns</h3><p class="stone-desc">Mestercsiszolástól foglalatba helyezésig — teljes minősítési dokumentációval és egyedi azonosítóval.</p></div>
-    <div class="stone-cell reveal"><span class="stone-icon">✦</span><h3 class="stone-name">Különleges csiszolatok</h3><p class="stone-desc">Emerald, Princess, Pear, Oval és Marquise csiszolású gyémántok. Egyedi darabok, mindegyik más.</p></div>
+    <div class="stone-cell reveal"><span class="stone-icon">✦</span><h3 class="stone-name">Nyers gyémánt</h3><p class="stone-desc">Még nem döntött a sors, mivé legyen. Befektetési célból vagy majdani ékszernek — csiszolatlan, útlevéllel, GIA/IGI hitelesítéssel.</p></div>
+    <div class="stone-cell reveal"><span class="stone-icon">✦</span><h3 class="stone-name">Csiszolt brilliáns</h3><p class="stone-desc">A legtöbb emberi kéz soha nem érinti. A miénk igen — hogy pontosan illeszkedjen ahhoz, aki viseli. Teljes dokumentációval.</p></div>
+    <div class="stone-cell reveal"><span class="stone-icon">✦</span><h3 class="stone-name">Különleges csiszolatok</h3><p class="stone-desc">Emerald, Princess, Pear, Oval, Marquise — mindegyik más fényt vet, más karaktert hordoz. Mindegyik egyszer van.</p></div>
   </div>
 </section>
 
@@ -1085,6 +1164,24 @@
     </div>
   </div>
 </section>
+
+<!-- EXPERIENCE STRIP -->
+<div class="experience-strip">
+  <div class="exp-item reveal">
+    <span class="exp-icon">◆  ◆  ◆</span>
+    <p>Egyedi mahagóni doboz<br>minden darabhoz</p>
+  </div>
+  <div class="exp-sep">◆</div>
+  <div class="exp-item reveal">
+    <span class="exp-icon">◆  ◆  ◆</span>
+    <p>Fehérkesztyűs személyes<br>átadás</p>
+  </div>
+  <div class="exp-sep">◆</div>
+  <div class="exp-item reveal">
+    <span class="exp-icon">◆  ◆  ◆</span>
+    <p>Teljes dokumentációs csomag<br>— örökre megőrizve</p>
+  </div>
+</div>
 
 <!-- CONTACT -->
 <section id="contact" class="contact-section" style="background:var(--deep);">
