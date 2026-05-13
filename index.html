@@ -327,11 +327,12 @@
     .rings-carousel { position: relative; }
     .rings-track-clip { overflow: hidden; position: relative; }
     .rings-track {
-      display: flex;
+      display: flex; gap: 16px;
       transition: transform .55s cubic-bezier(.25,.1,.25,1);
       will-change: transform;
     }
-    .rings-track .ring-card { flex: 0 0 100%; min-width: 0; }
+    /* calc: 100% - gap(16) - peek(44) = következő kártya 44px-e kilóg */
+    .rings-track .ring-card { flex: 0 0 calc(100% - 60px); min-width: 0; }
     /* Nyilak a kép bal/jobb szélén lebegnek */
     .carousel-btn {
       position: absolute; top: 150px; transform: translateY(-50%);
@@ -1417,11 +1418,13 @@ document.getElementById('logo-home').addEventListener('click', () =>
 
   function goTo(idx) {
     current = Math.max(0, Math.min(idx, cards.length - 1));
-    track.style.transform = `translateX(-${current * 100}%)`;
+    const step = cards[0].offsetWidth + 16;
+    track.style.transform = `translateX(-${current * step}px)`;
     dots.forEach((d, i) => d.classList.toggle('active', i === current));
     prevBtn.disabled = current === 0;
     nextBtn.disabled = current === cards.length - 1;
   }
+  window.addEventListener('resize', () => goTo(current));
 
   prevBtn.addEventListener('click', () => goTo(current - 1));
   nextBtn.addEventListener('click', () => goTo(current + 1));
