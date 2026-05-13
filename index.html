@@ -652,9 +652,27 @@
       nav ul { display: none; }
       .hamburger { display: flex; }
 
-      /* Hero — mobilon csak szöveg, semmi nehéz animáció */
-      .hero { padding: 100px 28px 140px; min-height: 100svh; }
-      .hero-diamond-wrap { display: none; }
+      /* Hero — mobilon kisebb diamond, orbit és particles nélkül */
+      .hero {
+        padding: 100px 28px 140px; min-height: 100svh;
+        justify-content: flex-end;
+        padding-bottom: 120px;
+      }
+      /* Mobilon a diamond a háttérben középen lebeg */
+      .hero-diamond-wrap {
+        width: 260px; height: 260px;
+        top: 38%; left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: .55;
+      }
+      /* Glow mobilon is */
+      .hero-diamond-wrap::after { inset: -20px; }
+      /* Csak sima lebegés mobilon, nincs forgatás */
+      .hero-diamond { animation: diamond-float-mobile 5s ease-in-out infinite; }
+      @keyframes diamond-float-mobile {
+        0%, 100% { transform: translateY(0); }
+        50%       { transform: translateY(-14px); }
+      }
       .orbit { display: none; }
       .aurora { display: none; }
       #particles { display: none; }
