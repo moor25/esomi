@@ -420,9 +420,13 @@
       object-fit: contain;
       mix-blend-mode: screen;
       display: block;
-      transition: transform .7s ease;
+      animation: photo-float 4.5s ease-in-out infinite;
+      animation-play-state: paused;
+      transition: filter .6s ease;
     }
-    .ring-card:hover .ring-photo { transform: scale(1.06); }
+    .ring-card:hover .ring-photo {
+      filter: drop-shadow(0 0 32px rgba(201,168,76,.5));
+    }
     .ring-photo-glow {
       position: absolute; inset: 0; pointer-events: none; z-index: 1;
       background: radial-gradient(ellipse 55% 42% at 50% 46%, rgba(201,168,76,.18) 0%, transparent 65%);
@@ -452,6 +456,10 @@
     @keyframes ring-idle {
       0%, 100% { transform: translateY(0) rotate(-4deg) scale(1); }
       50%       { transform: translateY(-12px) rotate(4deg) scale(1.05); }
+    }
+    @keyframes photo-float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-11px); }
     }
     .ring-card:hover .ring-emoji {
       transform: translateY(-16px) rotate(0deg) scale(1.12) !important;
@@ -1398,7 +1406,7 @@ const animObs = new IntersectionObserver((entries) => {
     }
   });
 }, { threshold: 0.2 });
-document.querySelectorAll('.ring-emoji, .ring-badge, .stone-icon, .center-gem, .trust-icon, .contact-item .icon').forEach(el => animObs.observe(el));
+document.querySelectorAll('.ring-emoji, .ring-badge, .stone-icon, .center-gem, .trust-icon, .contact-item .icon, .ring-photo').forEach(el => animObs.observe(el));
 
 /* ══ NAV SCROLL ══ */
 const nav = document.getElementById('nav');
