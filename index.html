@@ -441,20 +441,6 @@
       0%, 100% { opacity: .7; }
       50%       { opacity: 1.0; }
     }
-    /* Gyűrűfotó tükörreflexió */
-    .ring-reflect {
-      position: absolute; bottom: 10px; left: 50%;
-      transform: translateX(-50%);
-      width: 150px; height: 28px;
-      border-radius: 50%;
-      background: radial-gradient(ellipse, rgba(201,168,76,.2) 0%, transparent 70%);
-      pointer-events: none; z-index: 0;
-      animation: reflect-pulse 4.5s ease-in-out infinite;
-    }
-    @keyframes reflect-pulse {
-      0%, 100% { opacity: .7; width: 150px; }
-      50%       { opacity: 1; width: 170px; }
-    }
     .ring-img::before {
       content: '';
       position: absolute; inset: 0;
@@ -1153,7 +1139,6 @@
         <div class="ring-img has-photo">
           <img src="solitaire-no1.png" alt="Solitaire gyémánt gyűrű" class="ring-photo">
           <div class="ring-photo-glow"></div>
-          <div class="ring-reflect"></div>
           <div class="ring-badge">Megtekinthető</div>
         </div>
         <div class="ring-info">
