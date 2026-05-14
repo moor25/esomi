@@ -875,8 +875,10 @@
       /* Rings */
       .rings-header { margin-bottom: 36px; flex-direction: column; gap: 12px; }
       .rings-header p { max-width: 100% !important; }
-      .carousel-btn { width: 40px; height: 40px; font-size: .9rem; }
-      .rings-carousel-row { gap: 12px; }
+      .rings-carousel-row { display: block; position: relative; }
+      .carousel-btn { position: absolute; top: 130px; width: 40px; height: 40px; font-size: .9rem; }
+      .carousel-prev { left: 12px; }
+      .carousel-next { right: 12px; }
       .ring-img { height: 260px; }
       .ring-emoji { font-size: 4.5rem; }
       .ring-info { padding: 24px; }
