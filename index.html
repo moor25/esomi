@@ -325,6 +325,7 @@
       font-family: 'Cormorant Garamond', serif;
       font-size: clamp(2rem, 4vw, 3.4rem); font-weight: 300; line-height: 1.15;
       margin-bottom: 20px;
+      text-shadow: 1px 2px 10px rgba(0,0,0,.55), 0 0 50px rgba(201,168,76,.06);
     }
     .section-title em {
       font-style: italic;
@@ -439,6 +440,20 @@
     @keyframes photo-glow-pulse {
       0%, 100% { opacity: .7; }
       50%       { opacity: 1.0; }
+    }
+    /* Gyűrűfotó tükörreflexió */
+    .ring-reflect {
+      position: absolute; bottom: 10px; left: 50%;
+      transform: translateX(-50%);
+      width: 150px; height: 28px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(201,168,76,.2) 0%, transparent 70%);
+      pointer-events: none; z-index: 0;
+      animation: reflect-pulse 4.5s ease-in-out infinite;
+    }
+    @keyframes reflect-pulse {
+      0%, 100% { opacity: .7; width: 150px; }
+      50%       { opacity: 1; width: 170px; }
     }
     .ring-img::before {
       content: '';
@@ -746,7 +761,11 @@
       display: flex; align-items: center; gap: 20px;
       margin: 0 64px; opacity: .3;
     }
-    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--gold); }
+    .divider::before { content: ''; flex: 1; height: 1px; background: var(--gold); transform: scaleX(0); transform-origin: right center; }
+    .divider::after  { content: ''; flex: 1; height: 1px; background: var(--gold); transform: scaleX(0); transform-origin: left center; }
+    .divider.drawn::before { animation: div-grow .9s ease forwards; }
+    .divider.drawn::after  { animation: div-grow .9s ease .12s forwards; }
+    @keyframes div-grow { to { transform: scaleX(1); } }
     .divider span { font-size: .55rem; color: var(--gold); letter-spacing: .3em; }
 
     /* ══════════════════════════════════════
@@ -1008,34 +1027,34 @@
 
       <!-- ── CROWN (table y=16, girdle y=70) ── -->
       <!-- Table — brightest facet -->
-      <polygon points="65,16 135,16 118,44 100,50 82,44"   fill="#f0f7ff" opacity=".96"/>
+      <polygon data-f="top"       points="65,16 135,16 118,44 100,50 82,44"   fill="#f0f7ff" opacity=".96"/>
       <!-- Left star facet -->
-      <polygon points="65,16 82,44 38,58"                  fill="#cce2f5" opacity=".88"/>
+      <polygon data-f="left"      points="65,16 82,44 38,58"                  fill="#cce2f5" opacity=".88"/>
       <!-- Right star facet (shadow side) -->
-      <polygon points="135,16 162,58 118,44"               fill="#7aaccc" opacity=".78"/>
+      <polygon data-f="right"     points="135,16 162,58 118,44"               fill="#7aaccc" opacity=".78"/>
       <!-- Far-left sliver -->
-      <polygon points="12,70 38,58 65,16"                  fill="#4e88b0" opacity=".82"/>
+      <polygon data-f="far-left"  points="12,70 38,58 65,16"                  fill="#4e88b0" opacity=".82"/>
       <!-- Far-right sliver (darkest crown) -->
-      <polygon points="135,16 188,70 162,58"               fill="#18384e" opacity=".92"/>
+      <polygon data-f="far-right" points="135,16 188,70 162,58"               fill="#18384e" opacity=".92"/>
       <!-- Left inner crown -->
-      <polygon points="38,58 82,44 100,50 60,70"           fill="#8ec4dc" opacity=".72"/>
+      <polygon data-f="left"      points="38,58 82,44 100,50 60,70"           fill="#8ec4dc" opacity=".72"/>
       <!-- Right inner crown -->
-      <polygon points="162,58 140,70 100,50 118,44"        fill="#3a6888" opacity=".82"/>
+      <polygon data-f="right"     points="162,58 140,70 100,50 118,44"        fill="#3a6888" opacity=".82"/>
       <!-- Centre girdle triangle -->
-      <polygon points="60,70 100,50 140,70"                fill="#5a9ab8" opacity=".62"/>
+      <polygon data-f="top"       points="60,70 100,50 140,70"                fill="#5a9ab8" opacity=".62"/>
 
       <!-- Girdle line -->
       <line x1="12" y1="70" x2="188" y2="70" stroke="#c9a84c" stroke-width="1.2" opacity=".65"/>
 
       <!-- ── PAVILION (girdle y=70, culet y=182) ── -->
       <!-- Far left (deep dark) -->
-      <polygon points="12,70 60,70 100,182"   fill="#1a3248" opacity=".92"/>
+      <polygon data-f="far-left"  points="12,70 60,70 100,182"   fill="#1a3248" opacity=".92"/>
       <!-- Left-centre (bright internal reflection) -->
-      <polygon points="60,70 100,70 100,182"  fill="#a8d2ea" opacity=".72"/>
+      <polygon data-f="left"      points="60,70 100,70 100,182"  fill="#a8d2ea" opacity=".72"/>
       <!-- Right-centre -->
-      <polygon points="100,70 140,70 100,182" fill="#3a6480" opacity=".78"/>
+      <polygon data-f="right"     points="100,70 140,70 100,182" fill="#3a6480" opacity=".78"/>
       <!-- Far right (near black) -->
-      <polygon points="140,70 188,70 100,182" fill="#08181e" opacity=".96"/>
+      <polygon data-f="far-right" points="140,70 188,70 100,182" fill="#08181e" opacity=".96"/>
 
       <!-- Culet specular point -->
       <ellipse cx="100" cy="181" rx="2.5" ry="1.5" fill="white" opacity=".75"/>
@@ -1134,6 +1153,7 @@
         <div class="ring-img has-photo">
           <img src="solitaire-no1.png" alt="Solitaire gyémánt gyűrű" class="ring-photo">
           <div class="ring-photo-glow"></div>
+          <div class="ring-reflect"></div>
           <div class="ring-badge">Megtekinthető</div>
         </div>
         <div class="ring-info">
@@ -1563,7 +1583,7 @@ document.head.appendChild(sparkStyle);
   })();
 })();
 
-// ── 3D Tilt on Ring Cards ──
+// ── 3D Tilt on Ring Cards + dinamikus árnyék ──
 (function(){
   if (!matchMedia('(pointer: fine)').matches) return;
   document.querySelectorAll('.ring-card').forEach(card => {
@@ -1571,12 +1591,16 @@ document.head.appendChild(sparkStyle);
       const r = card.getBoundingClientRect();
       const x = ((e.clientX - r.left) / r.width  - .5) * 14;
       const y = ((e.clientY - r.top)  / r.height - .5) * -10;
-      card.style.transition = 'box-shadow .4s';
+      const sx = (-x * 2).toFixed(1);
+      const sy = ( y * 1.5).toFixed(1);
+      card.style.transition = '';
       card.style.transform  = `perspective(900px) rotateY(${x}deg) rotateX(${y}deg) scale(1.018)`;
+      card.style.boxShadow  = `0 0 0 1px rgba(201,168,76,.5), ${sx}px ${sy}px 40px rgba(0,0,0,.55), ${sx*.5}px ${sy*.5}px 18px rgba(201,168,76,.09)`;
     });
     card.addEventListener('mouseleave', () => {
-      card.style.transition = 'box-shadow .4s, transform .65s cubic-bezier(.23,1,.32,1)';
+      card.style.transition = 'box-shadow .5s, transform .65s cubic-bezier(.23,1,.32,1)';
       card.style.transform  = '';
+      card.style.boxShadow  = '';
     });
   });
 })();
@@ -1659,6 +1683,50 @@ document.head.appendChild(sparkStyle);
     });
   });
 })();
+
+// ── Divider Draw-in ──
+(function(){
+  const divObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('drawn'); divObs.unobserve(e.target); }
+    });
+  }, { threshold: 0.6 });
+  document.querySelectorAll('.divider').forEach(d => divObs.observe(d));
+})();
+
+// ── Hero Diamond Facet Lighting ──
+(function(){
+  if (!matchMedia('(pointer: fine)').matches) return;
+  const hero    = document.querySelector('.hero');
+  const diamond = document.querySelector('.hero-diamond');
+  if (!hero || !diamond) return;
+  const baseOps = { left: [.88, .72, .72], right: [.78, .82, .78], 'far-left': [.82, .92], 'far-right': [.92, .96] };
+  let tx = .5, cx = .5;
+  hero.addEventListener('mousemove', e => {
+    tx = (e.clientX - hero.getBoundingClientRect().left) / hero.getBoundingClientRect().width;
+  });
+  (function loop(){
+    cx += (tx - cx) * .05;
+    const L = Math.max(0, (.5 - cx) * 2);
+    const R = Math.max(0, (cx - .5) * 2);
+    diamond.querySelectorAll('[data-f="left"]').forEach((el, i) => {
+      el.setAttribute('opacity', Math.min(.99, (baseOps.left[i]||.75) + L * .22).toFixed(2));
+    });
+    diamond.querySelectorAll('[data-f="right"]').forEach((el, i) => {
+      el.setAttribute('opacity', Math.min(.99, (baseOps.right[i]||.75) + R * .22).toFixed(2));
+    });
+    diamond.querySelectorAll('[data-f="far-left"]').forEach((el, i) => {
+      el.setAttribute('opacity', Math.min(.99, (baseOps['far-left'][i]||.8) + L * .14).toFixed(2));
+    });
+    diamond.querySelectorAll('[data-f="far-right"]').forEach((el, i) => {
+      el.setAttribute('opacity', Math.min(.99, (baseOps['far-right'][i]||.9) - R * .18).toFixed(2));
+    });
+    requestAnimationFrame(loop);
+  })();
+})();
+
+// ── Dinamikus árnyék a 3D tilt alapján ──
+// (a meglévő tilt kódon belül van frissítve alább)
 
 // ── Logo → top ──
 document.getElementById('logo-home').addEventListener('click', () =>
