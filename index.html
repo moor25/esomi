@@ -154,7 +154,7 @@
       mix-blend-mode: screen;
       -webkit-mask-image: radial-gradient(ellipse 72% 68% at 50% 50%, black 20%, transparent 58%);
       mask-image:         radial-gradient(ellipse 72% 68% at 50% 50%, black 20%, transparent 58%);
-      filter: brightness(.82) drop-shadow(0 0 36px rgba(201,168,76,.55)) drop-shadow(0 0 80px rgba(201,168,76,.22));
+      filter: brightness(.68) drop-shadow(0 0 36px rgba(201,168,76,.55)) drop-shadow(0 0 80px rgba(201,168,76,.22));
       animation: diamond-float-img 5s ease-in-out infinite;
       will-change: transform;
     }
@@ -164,7 +164,10 @@
       66%       { transform: translate(-50%, -50%) translateY(-8px); }
     }
     @media (max-width: 800px) {
-      .hero-diamond-img { width: 340px; height: 340px; }
+      .hero-diamond-img {
+        width: 340px; height: 340px;
+        filter: brightness(.95) drop-shadow(0 0 28px rgba(201,168,76,.45)) drop-shadow(0 0 60px rgba(201,168,76,.18));
+      }
     }
     @keyframes diamond-float {
       0%, 100% { transform: translateY(0) rotate(0deg); }
