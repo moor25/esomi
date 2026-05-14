@@ -147,18 +147,24 @@
       filter: brightness(.65) drop-shadow(0 0 28px rgba(201,168,76,.38)) drop-shadow(0 0 10px rgba(180,220,255,.28));
     }
     .hero-diamond-img {
-      width: 500px; height: 500px;
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 620px; height: 620px;
       object-fit: contain;
-      display: block;
       mix-blend-mode: screen;
       -webkit-mask-image: radial-gradient(ellipse 72% 68% at 50% 50%, black 20%, transparent 58%);
       mask-image:         radial-gradient(ellipse 72% 68% at 50% 50%, black 20%, transparent 58%);
       filter: brightness(.82) drop-shadow(0 0 36px rgba(201,168,76,.55)) drop-shadow(0 0 80px rgba(201,168,76,.22));
-      animation: diamond-float 5s ease-in-out infinite;
+      animation: diamond-float-img 5s ease-in-out infinite;
       will-change: transform;
     }
+    @keyframes diamond-float-img {
+      0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+      33%       { transform: translate(-50%, -50%) translateY(-18px); }
+      66%       { transform: translate(-50%, -50%) translateY(-8px); }
+    }
     @media (max-width: 800px) {
-      .hero-diamond-img { width: 300px; height: 300px; }
+      .hero-diamond-img { width: 340px; height: 340px; }
     }
     @keyframes diamond-float {
       0%, 100% { transform: translateY(0) rotate(0deg); }
