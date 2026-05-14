@@ -351,7 +351,9 @@
     .rings-carousel-row {
       display: flex; align-items: center; gap: 20px;
     }
-    .rings-track-clip { overflow: hidden; flex: 1; }
+    .rings-track-clip { overflow: hidden; flex: 1; order: 2; }
+    .carousel-prev { order: 1; }
+    .carousel-next { order: 3; }
     .rings-track {
       display: flex;
       transition: transform .55s cubic-bezier(.25,.1,.25,1);
@@ -1126,7 +1128,6 @@
   </div>
   <div class="rings-carousel">
     <div class="rings-carousel-row">
-    <button class="carousel-btn carousel-prev" aria-label="Előző">&#8592;</button>
     <div class="rings-track-clip">
     <div class="rings-track">
       <div class="ring-card reveal">
@@ -1180,6 +1181,7 @@
       </div>
     </div>
     </div><!-- /rings-track-clip -->
+    <button class="carousel-btn carousel-prev" aria-label="Előző">&#8592;</button>
     <button class="carousel-btn carousel-next" aria-label="Következő">&#8594;</button>
     </div><!-- /rings-carousel-row -->
     <div class="carousel-nav">
